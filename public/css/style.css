@@ -1,0 +1,32 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper{
+    display: flex;
+    flex-flow: start wrap;
+}
+
+.esquerda{
+    width: 50%;
+}
+
+.direita{
+    width: 50%;
+    justify-content: center;
+}
+
+.login{
+    background-color: chocolate;
+
+}
+
+.button{
+    background-color: chocolate;
+}
+
+.cadastro{
+    background-color: chocolate;
+    border: 0.5px solid gray;
+}

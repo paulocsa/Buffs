@@ -1,0 +1,32 @@
+<%- include ('partials/header.ejs') %>
+
+<div class="wrapper">
+    <div class="esquerda">
+        <img src="imgs/fundo-login.png" alt="background-buffs">
+    </div>
+    <div class="direita">
+        <div class="login">
+            <h1 class="h1">Cadastre-se</h1>
+            <h4 class="h4">Crie sua conta agora. Entraremos em contato depois da criação.</h4>
+            <form action="/createUser" method="post">
+                <label>Nome de Usuário</label>
+                <input type="text" name="name" placeholder="Digite o seu nome de usuário" required> <br>
+                <label>Email</label>
+                <input type="email" name="email" placeholder="exemplo@email.com" required> <br>
+                <label>Senha</label>
+                <input type="password" name="password" placeholder="Insira a sua senha." required> <br>
+                <label>Confirmar Senha</label>
+                <input type="password" name="confirmPassword" placeholder="Confirme a sua senha."> <br>
+                <button type="submit" class="button">Cadastre-se</button>
+            </form>
+        </div>
+        <div class="cadastro">
+            <h1>Já possui conta?</h1>
+            <h4>Faça login com os dados inseridos durante o seu cadastro.</h4>
+
+            <button type="submit" class="button"><a href="/login">Entrar</a></button>
+        </div>
+    </div>
+</div>
+
+<%- include ('partials/footer.ejs') %>
