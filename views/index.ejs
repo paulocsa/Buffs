@@ -1,0 +1,35 @@
+<%- include ('partials/header.ejs') %>
+    <%- include ('partials/navbar.ejs') %>
+
+        <div class="titulo">
+            <h1>Página Principal</h1>
+        </div>
+
+        <div class="container">
+            <h4>Que bom ver você, #nome_usuario</h4>
+            <p>Você chegou ás #horario_do_dia</p>
+        </div>
+
+        <div class="container">
+            <div class="cadastros">
+                <table>
+                    <tr>Total de usuários no sistema</tr>
+                    <th>Cadastrados: </th>
+                    <th>Pendentes: </th>
+                    <tr>Total de búfalos registrados</tr>
+                    <th>Cadastradados: </th>
+                    <th>Pendentes: </th>
+                </table>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <table>
+                <tr>Registro de acesso ao Sistema</tr>
+                <th>Nome</th>
+                <th>Data de Acesso</th>
+                <th>Descrição de Tarefas</th>
+            </table>
+        </div>
+
+        <%- include ('partials/footer.ejs') %>

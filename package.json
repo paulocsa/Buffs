@@ -1,7 +1,7 @@
 {
-  "name": "dsm2-sistemaBuffs",
+  "name": "dsm2-sistemabuffs",
   "version": "1.0.0",
-  "description": "",
+  "description": "Buffs - Plataforma de Gestão para o Manejo de Bubalinos.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
