@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.section1 {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100vh;
+}
+.esquerdo, .direito {
+    flex: 1;
+}
+
+
+.box1, .box2 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.box1 {
+    width: 50vw;
+    height: 100vh;
+    background-color: green;
+    background-image: url('fundo-login.png');
+    background-size: cover; /* Faz com que a imagem cubra todo o espaço */
+    background-repeat: no-repeat; /* Impede a repetição da imagem */
+    background-position: center; /* Centraliza a imagem no contêiner */
+    display: flex;
+    justify-content: center;
+    
+
+}
+.box1>img{
+    margin-top: 10vh;
+    width: 500px;
+    height: 211.30px;
+}
+.box2 {
+    background-color: #FFF5F5;
+    display: flex;
+    justify-content: center;
+    
+    
+}
+
+/* Media Query para telas menores */
+@media (max-width: 768px) {
+    .esquerdo {
+        display: none;
+    }
+    .direito {
+        flex: 1 0 100%; /* Ocupa todo o espaço disponível */
+    }
+    
+}
+
+@media(max-width:1018px){
+    .box1>img{
+        margin-top: 10vh;
+        width: 400px;
+        height: 169.04px;
+    }
+}
