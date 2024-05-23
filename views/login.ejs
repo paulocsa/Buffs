@@ -1,29 +1,106 @@
 <%- include ('partials/header.ejs') %>
 
-    <div class="wrapper">
-        <div class="esquerda">
-            <img src="imgs/fundo-login.png" alt="background-buffs">
-        </div>
-        <div class="direita">
+    
+
+    <style>
+   
+
+
+
+.main-head{
+    height: 150px;
+    background: #FFF;
+   
+}
+
+.sidenav {
+    height: 100%;
+    background-color: #000;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+
+.main {
+    padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+}
+
+@media screen and (max-width: 450px) {
+    .login-form{
+        margin-top: 10%;
+    }
+
+    .register-form{
+        margin-top: 10%;
+    }
+}
+
+@media screen and (min-width: 768px){
+    .main{
+        margin-left: 40%; 
+    }
+
+    .sidenav{
+        width: 40%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+    }
+
+    .login-form{
+        margin-top: 10%;
+    }
+
+    .register-form{
+        margin-top: 20%;
+    }
+}
+
+
+
+
+
+
+    </style>
+
+    <div class="sidenav" style="background-image: url('imgs/fundo-login.png');">
+        
+     </div>
+     <div class="main">
+        <div class="col-md-6 col-sm-12" style="margin-left: 10%;">
+
+           <div class="login-form" style="background-color: red; border-style: dashed;border: 1px solid red;">
             <div class="login">
                 <h1 class="h1">Login</h1>
-                <h4 class="h4">Faça login com os dados inseridos durante seu cadastro.</h4>
-                <form action="">
-                    <label for="">Email</label>
-                    <input type="email" name="email" placeholder="exemplo@email.com" required> <br>
-                    <label for="">Senha</label>
-                    <input type="password" name="password" placeholder="Insira sua senha."> <br>
-                    <button type="submit" class="button"><a href="/index">Entrar</a></button>
-                </form>
+                 <p>Faça login com os dados inseridos durante seu cadastro.</p>
+                 <form>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1" style="font-size: 15px;">Endereço de email</label>
+                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="exemplo@email.com" name="email">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1" style="font-size: 15px;">Senha</label>
+                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha" name="password">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary"><a style="color: white;" href="/cadastro">Entrar</a></button>
+                  </form>
             </div>
+
+            
             <div class="cadastro">
                 <h1>Inscrever-se</h1>
                 <h4>Crie sua conta agora. Entraremos em contato depois da criação.</h4>
 
-                <button type="submit" class="button"><a href="/cadastro">Crie sua conta</a></button>
+                <button type="submit" class="btn btn-primary"><a style="color: white;" href="/cadastro">Crie sua conta</a></button>
             </div>
+           </div>
         </div>
-    </div>
-
+     </div>
 
     <%- include ('partials/footer.ejs') %>
