@@ -8,6 +8,17 @@ import connection from "./config/sequelize-config.js"
 
 import UsersController from "./controllers/UsersController.js"
 
+import session from "express-session"
+
+import flash from "express-flash"
+
+app.use(session({
+    secret: "lojasecret",
+    cookie: { maxAge: 3000000 }, //sessão expira em 1h
+    saveUninitialized: false, //se o usuario tentar logar no sistema ele nao vai inicializar a nova sessão
+    resave: false
+}))
+
 connection.authenticate().then(()=>{
     console.log("Conexão com o banco de dados feita com sucesso!")
 }).catch((error) => {
