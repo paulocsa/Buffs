@@ -1,32 +1,60 @@
 <%- include ('partials/header.ejs') %>
+    <%- include ('partials/nav.ejs') %>
 
-<div class="wrapper">
-    <div class="esquerda">
-        <img src="imgs/fundo-login.png" alt="background-buffs">
-    </div>
-    <div class="direita">
-        <div class="login">
-            <h1 class="h1">Cadastre-se</h1>
-            <h4 class="h4">Crie sua conta agora. Entraremos em contato depois da criação.</h4>
-            <form action="/createUser" method="post">
-                <label>Nome de Usuário</label>
-                <input type="text" name="name" placeholder="Digite o seu nome de usuário" required> <br>
-                <label>Email</label>
-                <input type="email" name="email" placeholder="exemplo@email.com" required> <br>
-                <label>Senha</label>
-                <input type="password" name="password" placeholder="Insira a sua senha." required> <br>
-                <label>Confirmar Senha</label>
-                <input type="password" name="confirmPassword" placeholder="Confirme a sua senha."> <br>
-                <button type="submit" class="button">Cadastre-se</button>
-            </form>
+        <div class="section1">
+            <div class="esquerdo">
+                <div class="box1">
+                    <img src="/imgs/logo-svg.svg" alt="">
+
+                </div>
+            </div>
+            <div class="direito">
+                <div class="box2">
+                    <div class="col-md-6 col-sm-12 ajusta" style="display: flex; align-items: center;">
+
+                        <div class="login-form" style="background-color: #FFF5F5; ">
+                            <div class="login">
+                                <h1 class="h1" style="font-family: 'Inter', sans-serif;font-weight: 600;">Login</h1>
+                                <p>Faça login com os dados inseridos durante seu cadastro.</p>
+                                <br>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1" style="font-size: 15px;"><strong>Endereço de
+                                                email</strong></label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1"
+                                            aria-describedby="emailHelp" placeholder="exemplo@email.com" name="email"
+                                            style="background-color:#FFF5F5 ;border: 1px black solid;">
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1"
+                                            style="font-size: 15px;"><Strong>Senha:</Strong></label>
+                                        <input type="password" class="form-control" id="exampleInputPassword1"
+                                            placeholder="Senha" name="password"
+                                            style="background-color:#FFF5F5 ;border: 1px black solid;">
+                                    </div>
+
+                                    <br>
+                                    <button type="submit" class="btn btn-primary"
+                                        style="width: 100%; background-color: #FFCF78;border: 0px;"><a
+                                            style="text-decoration: none; color: #43310B;"
+                                            href="/cadastro">Entrar</a></button>
+                                </form>
+                                <div class="col-md-6 col-sm-12"
+                                    style="margin-top: 20%; border: 1px solid black; width: 100%;">
+                                    <h1>Inscrever-se</h1>
+                                    <h4>Crie sua conta agora. Entraremos em contato depois da criação.</h4>
+
+                                    <button type="submit" class="btn btn-primary"><a style="color: white;"
+                                            href="/cadastro">Crie sua conta</a></button>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="cadastro">
-            <h1>Já possui conta?</h1>
-            <h4>Faça login com os dados inseridos durante o seu cadastro.</h4>
-
-            <button type="submit" class="button"><a href="/login">Entrar</a></button>
-        </div>
-    </div>
-</div>
-
-<%- include ('partials/footer.ejs') %>
+        <%- include ('partials/footer.ejs') %>
