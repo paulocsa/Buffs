@@ -56,6 +56,13 @@
     .direito {
         flex: 1 0 100%; /* Ocupa todo o espaço disponível */
     }
+    .box2{
+        margin-left:20px ;
+        margin-right: 20px;
+    }
+    .box2>.ajusta{
+        margin-right: 20px;
+    }
     
 }
 
