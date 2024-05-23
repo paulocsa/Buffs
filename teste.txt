@@ -15,7 +15,7 @@ git checkout -b minha-nova-branch
 
  git add .
 
- ##F aça o commit das alterações:
+ ## Faça o commit das alterações:
  git commit -m "Descrição das mudanças feitas"
 
  ## Voltar para a Branch main
