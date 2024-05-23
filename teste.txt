@@ -1,1 +1,45 @@
-123456
+colinha de comandos git
+
+## Atualizar a Branch main Local
+
+git checkout main
+git pull origin main
+
+## Criar e Trocar para uma Nova Branch
+
+git checkout -b minha-nova-branch
+
+## Fazer Alterações e Comitar na Nova Branch
+ - Faça suas alterações no código.
+ - Adicione as alterações
+
+ git add .
+
+ ## Faça o commit das alterações:
+ git commit -m "Descrição das mudanças feitas"
+
+ ## Voltar para a Branch main
+
+ git checkout main
+
+ ## Garantir que a Branch main Está Atualizada
+
+ git pull origin main
+
+## Mesclar a Nova Branch na Branch main
+
+git merge minha-nova-branch
+
+
+## Enviar as Atualizações da Branch main para o Repositório Remoto
+
+git add .
+
+git commit -m "Resolvendo conflitos de mesclagem"
+
+git push origin main
+
+
+
+
+
