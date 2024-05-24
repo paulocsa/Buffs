@@ -6,7 +6,7 @@
 }
 
 :root{
-    --fundo: #FFF5F5 ;
+    --fundo: #FEF5E5 ;
     --texto: #43310B;
     --botao: #FFCF78;
 }
@@ -45,7 +45,7 @@
     height: 211.30px;
 }
 .box2 {
-    background-color: #FFF5F5;
+    background-color: var(--fundo);
     display: flex;
     justify-content: center;
     
