@@ -3,6 +3,7 @@
 *{
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 :root{
@@ -80,4 +81,14 @@
         width: 400px;
         height: 169.04px;
     }
+}
+
+
+
+
+/* css home */
+
+
+.active{
+    background-color: #E0E0E0;
 }
