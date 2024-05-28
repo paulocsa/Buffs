@@ -1,48 +1,47 @@
-import express from 'express'
-const app = express()
-app.set('view engine', 'ejs')
-app.use(express.static('public'))
-app.use(express.urlencoded({extended: false}))
+import express from 'express';
+import session from 'express-session';
+import flash from 'express-flash';
 
-import connection from "./config/sequelize-config.js"
+const app = express();
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: false }));
 
-import UsersController from "./controllers/UsersController.js"
-
-import session from "express-session"
-
-import flash from "express-flash"
+import connection from "./config/sequelize-config.js";
+import UsersController from "./controllers/UsersController.js";
+import Auth from "./middleware/Auth.js";
 
 app.use(session({
-    secret: "lojasecret",
-    cookie: { maxAge: 3000000 }, //sessão expira em 1h
-    saveUninitialized: false, //se o usuario tentar logar no sistema ele nao vai inicializar a nova sessão
+    secret: "buffssecret",
+    cookie: { maxAge: 3000000 }, // sessão expira em 1h
+    saveUninitialized: false, // se o usuario tentar logar no sistema ele nao vai inicializar a nova sessão
     resave: false
-}))
+}));
 
-connection.authenticate().then(()=>{
-    console.log("Conexão com o banco de dados feita com sucesso!")
+app.use(flash()); // Certifique-se de usar o flash após o middleware de sessão
+
+connection.authenticate().then(() => {
+    console.log("Conexão com o banco de dados feita com sucesso!");
 }).catch((error) => {
-    console.log(error)
-})
+    console.log(error);
+});
+
 connection.query(`CREATE DATABASE IF NOT EXISTS buffs;`).then(() => {
-    console.log("O banco de dados está criado.")
+    console.log("O banco de dados está criado.");
 }).catch((error) => {
-    console.log(error)
-})
+    console.log(error);
+});
 
-app.use("/", UsersController)
+app.use("/", UsersController);
 
-//rota main
-app.get("/",function(req,res){
-    res.render("index")
-})
+app.get("/", Auth, function (req, res) {
+    res.render("index");
+});
 
-//porta do servidor
-app.listen(8080,function(erro){
-    if(erro) {
-        console.log("Ocorreu um erro!")
-
-    }else{
-        console.log("Servidor iniciado com sucesso!")
+app.listen(8080, function (erro) {
+    if (erro) {
+        console.log("Ocorreu um erro!");
+    } else {
+        console.log("Servidor iniciado com sucesso!");
     }
-})
+});

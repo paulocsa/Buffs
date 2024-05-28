@@ -1,11 +1,10 @@
 function Auth(req, res, next) {
     if (req.session.user != undefined) {
-        next()
+        next();
     } else {
-        res.render("login", {
-            loggedOut: true
-        })
+        req.flash('danger', 'Você precisa estar logado para acessar esta página.');
+        res.redirect('/login');
     }
 }
 
-export default Auth
+export default Auth;
