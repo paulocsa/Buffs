@@ -74,6 +74,7 @@ router.post("/authenticate", (req, res) => {
                 //res.redirect("/")
                 res.send(`Usuário logado: <br> ID: ${req.session.user['id']} <br> email: ${req.session.user['email']}`)
                 //Se a senha não for valida
+                res.redirect("/");
             } else {
                 req.flash('danger', 'Senha incorreta! Tente novamente.')
                 res.redirect("/login")
