@@ -75,7 +75,14 @@ router.post("/authenticate", (req, res) => {
                 //Criando uma flash message
                 req.flash('success', 'Login efetuado com sucesso!');
 
+<<<<<<< HEAD
                 res.redirect('/'); // Redireciona para a página inicial ou outra página apropriada
+=======
+                //res.redirect("/")
+                res.send(`Usuário logado: <br> ID: ${req.session.user['id']} <br> email: ${req.session.user['email']}`)
+                //Se a senha não for valida
+                res.redirect("/");
+>>>>>>> paulocsa
             } else {
                 req.flash('danger', 'Senha incorreta! Tente novamente.');
                 res.redirect('/login');
