@@ -1,24 +1,24 @@
 <%- include ('partials/header.ejs') %>
 
-    <% if(messages.danger) { %>
-        <div class="alert alert-danger">
-            <%= messages.danger %>
-        </div>
-        <% } %>
 
-            <% if(messages.success) { %>
-                <div class="alert alert-success">
-                    <%= messages.success %>
+    <div class="section1">
+        <div class="esquerdo">
+            <div class="box1">
+                <img src="/imgs/logo-svg.svg" alt="">
+            </div>
+        </div>
+        <div class="direito">
+            <% if(messages.danger) { %>
+                <div class="alert alert-danger">
+                    <%= messages.danger %>
                 </div>
                 <% } %>
 
-                    <div class="section1">
-                        <div class="esquerdo">
-                            <div class="box1">
-                                <img src="/imgs/logo-svg.svg" alt="">
-                            </div>
+                    <% if(messages.success) { %>
+                        <div class="alert alert-success">
+                            <%= messages.success %>
                         </div>
-                        <div class="direito">
+                        <% } %>
                             <div class="box2">
                                 <div class="col-md-6 col-sm-12 ajusta" style="display: flex; align-items: center;">
                                     <div class="login-form" style="background-color: #FEF5E5; ">
@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+        </div>
+    </div>
 
-                    <%- include ('partials/footer.ejs') %>
+    <%- include ('partials/footer.ejs') %>
