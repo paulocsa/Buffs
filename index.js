@@ -9,7 +9,9 @@ app.use(express.urlencoded({ extended: false }));
 
 import connection from "./config/sequelize-config.js";
 import UsersController from "./controllers/UsersController.js";
+import BufalosController from "./controllers/BufalosController.js";
 import Auth from "./middleware/Auth.js";
+import Bufalo from './models/Bufalo.js';
 
 app.use(session({
     secret: "buffssecret",
@@ -33,6 +35,7 @@ connection.query(`CREATE DATABASE IF NOT EXISTS buffs;`).then(() => {
 });
 
 app.use("/", UsersController);
+app.use("/", BufalosController)
 
 app.get("/", Auth, function (req, res) {
     res.render("index");
