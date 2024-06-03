@@ -37,6 +37,6 @@ const Bufalo = connection.define('bufalos', {
     }
 })
 
-User.sync({ force: false })
+Bufalo.sync({ force: false })
 
 export default Bufalo;

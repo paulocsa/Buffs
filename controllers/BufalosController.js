@@ -23,7 +23,7 @@ router.post("/createBufalo", (req, res) => {
         return
     }
 
-     // Verificando se o usuário já está cadastrado
+     // Verificando se o búfalo já está cadastrado
      User.findOne({ where: { tag } }).then(bufalo => {
         if (bufalo == undefined) {
             // Cadastro
