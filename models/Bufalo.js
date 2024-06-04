@@ -9,7 +9,7 @@ const Bufalo = connection.define('bufalos', {
     valorArroba: {
         type: Sequelize.FLOAT,
         allowNull: false,
-        unique: true 
+        unique: true
     },
     nome: {
         type: Sequelize.STRING,

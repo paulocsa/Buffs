@@ -23,8 +23,7 @@ router.post("/createUser", (req, res) => {
 
     if (password !== confirmPassword) {
         req.flash('danger', 'As senhas não coincidem.')
-        res.redirect('/cadastro')
-        return
+        return res.redirect('/cadastro')
     }
 
     // Verificando se o usuário já está cadastrado
@@ -40,18 +39,18 @@ router.post("/createUser", (req, res) => {
                 password: hash
             }).then(() => {
                 req.flash('success', 'Usuário cadastrado com sucesso! Faça o login.')
-                res.redirect('/login')
+                return res.redirect('/login')
             }).catch(err => {
                 req.flash('danger', 'Erro ao cadastrar usuário.')
-                res.redirect('/cadastro')
+                return res.redirect('/cadastro')
             })
         } else {
             req.flash('danger', 'Usuário já possui cadastro, faça o login.')
-            res.redirect('/cadastro')
+            return res.redirect('/cadastro')
         }
     }).catch(err => {
         req.flash('danger', 'Erro ao verificar usuário.')
-        res.redirect('/cadastro')
+        return res.redirect('/cadastro')
     })
 })
 
@@ -75,24 +74,20 @@ router.post("/authenticate", (req, res) => {
                 //Criando uma flash message
                 req.flash('success', 'Login efetuado com sucesso!')
 
-                res.redirect('/') // Redireciona para a página inicial ou outra página apropriada
-
-                //res.redirect("/")
-                res.send(`Usuário logado: <br> ID: ${req.session.user['id']} <br> email: ${req.session.user['email']}`)
-                //Se a senha não for valida
-                res.redirect("/")
+                // Enviar apenas uma resposta
+                return res.redirect('/') // Redireciona para a página inicial ou outra página apropriada
 
             } else {
                 req.flash('danger', 'Senha incorreta! Tente novamente.')
-                res.redirect('/login')
+                return res.redirect('/login')
             }
         } else {
             req.flash('danger', 'Usuário não cadastrado!')
-            res.redirect('/login')
+            return res.redirect('/login')
         }
     }).catch(err => {
         req.flash('danger', 'Erro ao buscar usuário.')
-        res.redirect('/login')
+        return res.redirect('/login')
     })
 })
 

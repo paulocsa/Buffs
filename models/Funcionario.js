@@ -50,4 +50,4 @@ const Funcionario = connection.define('funcionarios', {
 
 Funcionario.sync({ force: false })
 
-export default Funcionario;
+export default Funcionario
