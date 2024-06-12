@@ -3,7 +3,7 @@ const router = express.Router()
 import Funcionario from '../models/Funcionario.js'
 
 // Rota para listar todos os funcionários
-router.get('/usuCadastrados', (req, res) => {
+router.get('/funcionarios', (req, res) => {
     Funcionario.findAll().then(funcionarios => {
         res.render('usuCadastrados', { funcionarios })
     }).catch(err => {
