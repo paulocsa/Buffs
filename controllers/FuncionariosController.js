@@ -4,12 +4,7 @@ import Funcionario from '../models/Funcionario.js'
 
 // Rota para listar todos os funcionários
 router.get('/funcionarios', (req, res) => {
-    Funcionario.findAll().then(funcionarios => {
-        res.render('usuCadastrados', { funcionarios })
-    }).catch(err => {
-        req.flash('danger', 'Erro ao carregar funcionários.')
-        res.redirect('/')
-    })
+    res.render('funcionarios')
 })
 
 // Rota para exibir o formulário de criação de funcionário

@@ -4,13 +4,8 @@ import Bufalo from '../models/Bufalo.js'
 import { where } from 'sequelize'
 
 // Rota para listar todos os búfalos
-router.get('/rebanho', (req, res) => {
-    Bufalo.findAll().then(bufalos => {
-        res.render('rebanho', { bufalos })
-    }).catch(err => {
-        req.flash('danger', 'Erro ao carregar búfalos.')
-        res.redirect('/')
-    })
+router.get('/bufalos', (req, res) => {
+res.render('bufalos')
 })
 
 // Rota para exibir o formulário de criação de búfalo
