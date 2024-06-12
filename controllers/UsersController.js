@@ -5,57 +5,60 @@ import bcrypt from 'bcrypt'
 import { where } from 'sequelize'
 
 router.get("/login", (req, res) => {
-    res.render('login'), {
+    res.render('login', {
         loggedOut: true,
         messages: req.flash()
-    }
+    })
 })
 
 router.get("/cadastro", (req, res) => {
-    res.render('cadastro'), {
+    res.render('cadastro', {
         loggedOut: true,
         messages: req.flash()
-    }
+    })
 })
 
 router.post("/createUser", (req, res) => {
-    const name = req.body.name
-    const email = req.body.email
-    const password = req.body.password
-    const confirmPassword = req.body.confirmPassword
+    const { name, email, password, confirmPassword } = req.body
 
     if (password !== confirmPassword) {
-        res.send('As senhas não coincidem. <br> <a href="/cadastro">Tente novamente.</a>')
-        return
+        req.flash('danger', 'As senhas não coincidem.')
+        return res.redirect('/cadastro')
     }
 
     // Verificando se o usuário já está cadastrado
-    User.findOne({ where: { email: email } }).then(user => {
+    User.findOne({ where: { email } }).then(user => {
         if (user == undefined) {
             // Cadastro
             const salt = bcrypt.genSaltSync(10) // Quantidade do hash
             const hash = bcrypt.hashSync(password, salt)
             // Criar o usuário com hash
             User.create({
-                name: name,
-                email: email,
+                name,
+                email,
                 password: hash
             }).then(() => {
-                res.redirect("/login")
+                req.flash('success', 'Usuário cadastrado com sucesso! Faça o login.')
+                return res.redirect('/login')
+            }).catch(err => {
+                req.flash('danger', 'Erro ao cadastrar usuário.')
+                return res.redirect('/cadastro')
             })
         } else {
             req.flash('danger', 'Usuário já possui cadastro, faça o login.')
-           res.redirect("/cadastro")
+            return res.redirect('/cadastro')
         }
+    }).catch(err => {
+        req.flash('danger', 'Erro ao verificar usuário.')
+        return res.redirect('/cadastro')
     })
 })
 
 // Rota de Autenticação do Usuario
 router.post("/authenticate", (req, res) => {
-    const email = req.body.email
-    const password = req.body.password
+    const { email, password } = req.body
     // Busca o Usuario no Banco
-    User.findOne({ where: { email: email } }).then(user => {
+    User.findOne({ where: { email } }).then(user => {
         // Se o Usuario Exisitir
         if (user != undefined) {
             //Valida a senha
@@ -71,18 +74,27 @@ router.post("/authenticate", (req, res) => {
                 //Criando uma flash message
                 req.flash('success', 'Login efetuado com sucesso!')
 
-                //res.redirect("/")
-                res.send(`Usuário logado: <br> ID: ${req.session.user['id']} <br> email: ${req.session.user['email']}`)
-                //Se a senha não for valida
+                // Enviar apenas uma resposta
+                return res.redirect('/') // Redireciona para a página inicial ou outra página apropriada
+
             } else {
                 req.flash('danger', 'Senha incorreta! Tente novamente.')
-                res.redirect("/login")
+                return res.redirect('/login')
             }
         } else {
             req.flash('danger', 'Usuário não cadastrado!')
-            res.redirect("/login")
+            return res.redirect('/login')
         }
+    }).catch(err => {
+        req.flash('danger', 'Erro ao buscar usuário.')
+        return res.redirect('/login')
     })
+})
+
+// Rota logout
+router.get("/logout", (req, res) => {
+    req.session.user = undefined
+    res.redirect('/')
 })
 
 export default router
