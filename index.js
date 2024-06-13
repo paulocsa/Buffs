@@ -7,7 +7,6 @@ import connection from './config/sequelize-config.js'
 import UsersController from './controllers/UsersController.js'
 import BufalosController from './controllers/BufalosController.js'
 import FuncionariosController from './controllers/FuncionariosController.js'
-import DemandasController from './controllers/DemandasController.js' // Importa o novo controlador
 import Auth from './middleware/Auth.js'
 
 const app = express()
@@ -42,7 +41,6 @@ app.use(flash())
 app.use('/', UsersController)
 app.use('/', BufalosController)
 app.use('/', FuncionariosController)
-app.use('/', DemandasController) 
 
 // Rota Inicial com Autenticação
 app.get('/', Auth, (req, res) => {
