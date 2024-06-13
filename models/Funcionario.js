@@ -43,7 +43,7 @@ const Funcionario = connection.define('funcionarios', {
         allowNull: false
     },
     dataNascimento: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false
     }
 })
