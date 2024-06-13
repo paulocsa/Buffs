@@ -4,14 +4,17 @@ import Funcionario from '../models/Funcionario.js'
 
 // Rota para listar todos os funcionários
 router.get('/funcionarios', (req, res) => {
-    res.render('funcionarios')
-})
+    Funcionario.findAll()
+        .then(funcionarios => {
+            res.render('funcionarios', { funcionarios });
+        })
+        .catch(err => {
+            req.flash('danger', 'Erro ao listar funcionários.');
+            res.redirect('/');
+        });
+});
 
 
-// Rota para exibir o formulário de criação de funcionário
-router.get('/usuCadastrar', (req, res) => {
-    res.render('usuCadastrar')
-})
 
 // Rota para criar um novo funcionário
 router.post('/createFuncionario', (req, res) => {
@@ -34,10 +37,10 @@ router.post('/createFuncionario', (req, res) => {
         descricaoAcoes
     }).then(() => {
         req.flash('success', 'Funcionário cadastrado com sucesso!')
-        return res.redirect('/usuCadastrados')
+        return res.redirect('/funcionarios')
     }).catch(err => {
         req.flash('danger', 'Erro ao cadastrar funcionário.')
-        return res.redirect('/usuCadastrar')
+        return res.redirect('/funcionarios')
     })
 })
 
@@ -49,11 +52,11 @@ router.get('/editFuncionario/:id', (req, res) => {
             res.render('editFuncionario', { funcionario })
         } else {
             req.flash('danger', 'Funcionário não encontrado.')
-            res.redirect('/usuCadastrados')
+            res.redirect('/funcionarios')
         }
     }).catch(err => {
         req.flash('danger', 'Erro ao buscar funcionário.')
-        res.redirect('/usuCadastrados')
+        res.redirect('/funcionarios')
     })
 })
 
@@ -82,14 +85,14 @@ router.post('/updateFuncionario/:id', (req, res) => {
     }).then(result => {
         if (result[0] > 0) {
             req.flash('success', 'Funcionário atualizado com sucesso!')
-            res.redirect('/usuCadastrados')
+            res.redirect('/funcionarios')
         } else {
             req.flash('danger', 'Erro ao atualizar funcionário.')
-            res.redirect('/editFuncionario/' + id)
+            res.redirect('/funcionarios/' + id)
         }
     }).catch(err => {
         req.flash('danger', 'Erro ao atualizar funcionário.')
-        res.redirect('/editFuncionario/' + id)
+        res.redirect('/funcionarios/' + id)
     })
 })
 
@@ -102,14 +105,14 @@ router.post('/deleteFuncionario/:id', (req, res) => {
     }).then(result => {
         if (result > 0) {
             req.flash('success', 'Funcionário deletado com sucesso!')
-            res.redirect('/usuCadastrados')
+            res.redirect('/funcionarios')
         } else {
             req.flash('danger', 'Erro ao deletar funcionário.')
-            res.redirect('/usuCadastrados')
+            res.redirect('/funcionarios')
         }
     }).catch(err => {
         req.flash('danger', 'Erro ao deletar funcionário.')
-        res.redirect('/usuCadastrados')
+        res.redirect('/funcionarios')
     })
 })
 
