@@ -92,3 +92,61 @@
 .active{
     background-color: #E0E0E0;
 }
+
+
+.div-recepicao{
+    background-color: #FFFFFF;
+    width: 95%;
+    height: 70px;
+    margin-bottom: 20px;
+    margin: 0 auto;
+    border-radius: 8px;
+    display: flex;
+    margin-left: auto;
+    
+}
+
+.div-infos{
+    background-color: #FFCF78;
+    width: 95%;
+    height: auto; 
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    border-radius: 10px; 
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+
+}
+
+.div-logout{
+    align-items: center;
+    justify-content: right;
+    display: flex;
+    margin-left: auto;
+    padding-right: 10px;
+
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #7c6d52!important; /* Escolha a cor desejada */ 
+  }
+
+p{
+    font-family: 'inter-medium';
+    font-size: 17px;
+    color: #0A0A0A;
+}
+
+
+@font-face {
+    font-family:'inter-medium' ;
+    src: url(../font/font-Inter/Inter-Medium.otf);
+  }

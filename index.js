@@ -8,6 +8,7 @@ import UsersController from './controllers/UsersController.js'
 import BufalosController from './controllers/BufalosController.js'
 import FuncionariosController from './controllers/FuncionariosController.js'
 import Auth from './middleware/Auth.js'
+import Funcionario from './models/Funcionario.js'
 
 const app = express()
 app.set('view engine', 'ejs')
@@ -44,7 +45,11 @@ app.use('/', FuncionariosController)
 
 // Rota Inicial com Autenticação
 app.get('/', Auth, (req, res) => {
-    res.render('index')
+    Funcionario.findAll().then(funcionarios => {
+        res.render('index', {
+            funcionarios: funcionarios
+        })
+    })
 })
 
 // Inicialização do Servidor

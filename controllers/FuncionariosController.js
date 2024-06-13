@@ -7,6 +7,9 @@ router.get('/funcionarios', (req, res) => {
     res.render('funcionarios')
 })
 
+
+
+
 // Rota para exibir o formulário de criação de funcionário
 router.get('/usuCadastrar', (req, res) => {
     res.render('usuCadastrar')
