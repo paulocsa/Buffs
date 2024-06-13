@@ -8,6 +8,21 @@ router.get('/rebanhos', (req, res) => {
 res.render('rebanhos')
 })
 
+// Rota do controle sanitário
+router.get('/sanitario', (req, res) => {
+    res.render('sanitario')
+})
+
+// Rota do controle zootecnico
+router.get('/zootecnico', (req, res) => {
+    res.render('zootecnico')
+})
+
+// Rota do controle reproducao
+router.get('/reproducao', (req, res) => {
+    res.render('reproducao')
+})
+
 // Rota para exibir o formulário de criação de búfalo
 router.get('/cadastroBufalo', (req, res) => {
     res.render('cadastroBufalo')

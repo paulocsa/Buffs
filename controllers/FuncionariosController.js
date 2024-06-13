@@ -1,19 +1,19 @@
 import express from 'express'
 const router = express.Router()
 import Funcionario from '../models/Funcionario.js'
+import Auth from '../middleware/Auth.js'
 
 // Rota para listar todos os funcionários
-router.get('/funcionarios', (req, res) => {
+router.get('/funcionarios', Auth, (req, res) => {
     Funcionario.findAll()
         .then(funcionarios => {
-            res.render('funcionarios', { funcionarios });
+            res.render('funcionarios')
         })
         .catch(err => {
-            req.flash('danger', 'Erro ao listar funcionários.');
-            res.redirect('/');
-        });
-});
-
+            req.flash('danger', 'Erro ao listar funcionários.')
+            res.redirect('/')
+        })
+})
 
 
 // Rota para criar um novo funcionário
