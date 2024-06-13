@@ -7,13 +7,14 @@ import Auth from '../middleware/Auth.js'
 router.get('/funcionarios', Auth, (req, res) => {
     Funcionario.findAll()
         .then(funcionarios => {
-            res.render('funcionarios')
+            res.render('funcionarios', { funcionarios: funcionarios }); // Passando funcionarios para o template
         })
         .catch(err => {
             req.flash('danger', 'Erro ao listar funcionários.')
             res.redirect('/')
         })
 })
+
 
 
 // Rota para criar um novo funcionário

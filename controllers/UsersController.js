@@ -3,7 +3,7 @@ const router = express.Router()
 import User from "../models/User.js"
 import bcrypt from 'bcrypt'
 import { where } from 'sequelize'
-import Cookies from 'js-cookie'
+
 
 router.get("/login", (req, res) => {
     res.render('login', {
