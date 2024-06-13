@@ -3,6 +3,7 @@ const router = express.Router()
 import User from "../models/User.js"
 import bcrypt from 'bcrypt'
 import { where } from 'sequelize'
+import Cookies from 'js-cookie'
 
 router.get("/login", (req, res) => {
     res.render('login', {
@@ -65,10 +66,11 @@ router.post("/authenticate", (req, res) => {
             const correct = bcrypt.compareSync(password, user.password)
             //Se a Senha for Valida
             if (correct) {
+
                 //Autoriza o login - posteriormente aq sera criado a sessão
                 req.session.user = {
                     id: user.id,
-                    email: user.email
+                    email: user.email,
                 }
 
                 //Criando uma flash message

@@ -15,6 +15,7 @@ router.get('/funcionarios', (req, res) => {
 });
 
 
+
 // Rota para criar um novo funcionário
 router.post('/createFuncionario', (req, res) => {
     const { nome, cpf, email, telefone, rua, numero, bairro, cidade, estado, cargo, dataNascimento, cargaHoraria, genero, descricaoAcoes } = req.body
