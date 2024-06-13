@@ -71,6 +71,7 @@ router.post("/authenticate", (req, res) => {
                 req.session.user = {
                     id: user.id,
                     email: user.email,
+                    name: user.name //esse aq vai ser puxado lá na index "Olá <user>!"
                 }
 
                 //Criando uma flash message

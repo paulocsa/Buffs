@@ -55,6 +55,7 @@ app.get('/', Auth, (req, res) => {
     //Define os dados da tabela bufalos
     const bufalosPromise = Bufalo.findAll();// Buscar todos os búfalos 
     const ultimoBufaloPromise = Bufalo.findOne({ order: [['id', 'DESC']] }); //Busca o ultimo Bufalo
+    const user = req.session.user //Defino o nome do usuario que iniciou a sessão, de acordo com seu cadastro
 
     // Utiliza Promisse para executar as operações em paralelo
     Promise.all([funcionariosPromise, ultimoFuncionarioPromise, bufalosPromise, ultimoBufaloPromise])
@@ -68,6 +69,7 @@ app.get('/', Auth, (req, res) => {
                 ultimoId: ultimoId,
                 bufalos: bufalos,
                 ultimoBufaloId: ultimoBufaloId,
+                user: user.name 
             
             });
         })

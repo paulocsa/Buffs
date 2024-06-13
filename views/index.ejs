@@ -106,8 +106,8 @@
                     <p style="margin-top: 20px; margin-left: 20px;">Página inicial</p>
                 </div>
                 <div class="div-recepicao">
-                    <div style="display: flex; margin-top: 5px; margin-left: 10px" >
-                        <p>Quem Bom ver você, QQQ</p>
+                    <div style="display: flex; margin-top: 10px; margin-left: 10px" >
+                        <p>Quem Bom ver você, <%= user %>!</p>
                     </div>
                     <div class="div-logout">
                         <% if (typeof loggedOut==="undefined" ) { %>
@@ -123,7 +123,7 @@
                         <p>
                             <% if (ultimoId !== null) { %>
                             Total de usuários dos sistema
-                            <br>Cadastrados: <%= ultimoId %> Pendentes: <span>5</span>
+                            <br>Cadastrados: <span style="color: #1158B7;"><%= ultimoId !== null ? ultimoId : 0 %></span> Pendentes: <span style="color: #D32940;">5</span>
                             <% } %>
                         </p>
 
@@ -132,14 +132,14 @@
                     <div>
                         <p>
                             Total de rebanhos registrados
-                            <br>Cadastrados: 4‎ ‎ ‎ ‎ Pendentes: 4
+                            <br>Cadastrados: <span style="color: #1158B7;">1</span> Pendentes:<span style="color: #D32940;">0</span>
                         </p>
                     </div>
                     <p>|</p>
                     <div>
                         <p>
                             Total de bubalinos registrados
-                            <br>Cadastrados:  <%= ultimoBufaloId %> Pendentes: 4
+                            <br>Cadastrados:  <span style="color: #1158B7;"><%= ultimoBufaloId !== null ? ultimoId : 0 %></span> Pendentes:<span style="color: #D32940;"> 4</span>
                         </p>
                     </div>
                 </div>
