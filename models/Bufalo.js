@@ -32,7 +32,7 @@ const Bufalo = connection.define('bufalos', {
         allowNull: false
     },
     dataNascimento: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false
     }
 })
