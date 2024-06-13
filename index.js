@@ -3,12 +3,14 @@ import express from 'express'
 import session from 'express-session'
 import flash from 'express-flash'
 
+
 import connection from './config/sequelize-config.js'
 import UsersController from './controllers/UsersController.js'
 import BufalosController from './controllers/BufalosController.js'
 import FuncionariosController from './controllers/FuncionariosController.js'
 import Auth from './middleware/Auth.js'
 import Funcionario from './models/Funcionario.js'
+import Bufalo from './models/Bufalo.js'
 
 const app = express()
 app.set('view engine', 'ejs')
@@ -43,14 +45,39 @@ app.use('/', UsersController)
 app.use('/', BufalosController)
 app.use('/', FuncionariosController)
 
+
+
 // Rota Inicial com Autenticação
 app.get('/', Auth, (req, res) => {
-    Funcionario.findAll().then(funcionarios => {
-        res.render('index', {
-            funcionarios: funcionarios
+    //Define os dados da tabela funcionarios
+    const funcionariosPromise = Funcionario.findAll(); // Buscar todos os funcionários
+    const ultimoFuncionarioPromise = Funcionario.findOne({ order: [['id', 'DESC']] }); //Busca o Ultimo funcionário
+    //Define os dados da tabela bufalos
+    const bufalosPromise = Bufalo.findAll();// Buscar todos os búfalos 
+    const ultimoBufaloPromise = Bufalo.findOne({ order: [['id', 'DESC']] }); //Busca o ultimo Bufalo
+
+    // Utiliza Promisse para executar as operações em paralelo
+    Promise.all([funcionariosPromise, ultimoFuncionarioPromise, bufalosPromise, ultimoBufaloPromise])
+        .then(([funcionarios, ultimoFuncionario, bufalos, ultimoBufalo]) => {
+            const ultimoId = ultimoFuncionario ? ultimoFuncionario.id : null;
+            const ultimoBufaloId = ultimoBufalo ? ultimoBufalo.id : null;
+
+            // Renderizar o template 'index' passando todos os dados necessários
+            res.render('index', {
+                funcionarios: funcionarios,
+                ultimoId: ultimoId,
+                bufalos: bufalos,
+                ultimoBufaloId: ultimoBufaloId,
+            
+            });
         })
-    })
-})
+        .catch(error => {
+            console.error('Erro ao buscar os dados:', error);
+            res.status(500).send('Erro no servidor');
+        });
+});
+
+
 
 // Inicialização do Servidor
 app.listen(8080, (erro) => {

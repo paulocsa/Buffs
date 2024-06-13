@@ -101,14 +101,13 @@
                 </div>
             </div>
 
-            <div
-                style="background-color: #FEF5E4;display: flex; width: 100%;flex-direction: column;flex-direction: column; justify-content: flex-start; ">
+            <div style="background-color: #FEF5E4;display: flex; width: 100%;flex-direction: column;flex-direction: column; justify-content: flex-start; ">
                 <div style="background-color: #F5F5F5; width: 100%;height: 70px; margin-bottom: 10px;">
                     <p style="margin-top: 20px; margin-left: 20px;">Página inicial</p>
                 </div>
                 <div class="div-recepicao">
-                    <div style="display: flex; margin-top: 5px; margin-left: 10px">
-                        <p>Quem Bom ver você, !!!!!</p>
+                    <div style="display: flex; margin-top: 5px; margin-left: 10px" >
+                        <p>Quem Bom ver você, QQQ</p>
                     </div>
                     <div class="div-logout">
                         <% if (typeof loggedOut==="undefined" ) { %>
@@ -122,8 +121,10 @@
                 <div class="div-infos">
                     <div class="subDiv-infos">
                         <p>
+                            <% if (ultimoId !== null) { %>
                             Total de usuários dos sistema
-                            <br>Cadastrados: 4‎ ‎ ‎ ‎ Pendentes: <span>5</span>
+                            <br>Cadastrados: <%= ultimoId %> Pendentes: <span>5</span>
+                            <% } %>
                         </p>
 
                     </div>
@@ -138,7 +139,7 @@
                     <div>
                         <p>
                             Total de bubalinos registrados
-                            <br>Cadastrados: 4‎ ‎ ‎ ‎ Pendentes: 4
+                            <br>Cadastrados:  <%= ultimoBufaloId %> Pendentes: 4
                         </p>
                     </div>
                 </div>
