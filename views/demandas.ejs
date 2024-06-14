@@ -1,5 +1,142 @@
-<%- include ('partials/header.ejs') %>
-<%- include ('partials/nav.ejs') %>
-<%- include ('partials/sidebar.ejs') %>
+<%- include('partials/header.ejs') %>
+    <%- include('partials/nav.ejs') %>
+        <%- include('partials/sidebar.ejs') %>
 
-<%- include ('partials/footer.ejs') %>
+            <div class="container">
+                <h1>Atribuir Demandas</h1>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDemandaModal">
+                    Adicionar Demandas
+                </button>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Cargo</th>
+                            <th>Tipo de Serviço</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% funcionarios.forEach(funcionario=> { %>
+                            <% if (funcionario.demandas && funcionario.demandas.length> 0) { %>
+                                <% funcionario.demandas.forEach(demanda=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= funcionario.nome %>
+                                        </td>
+                                        <td>
+                                            <%= funcionario.cargo %>
+                                        </td>
+                                        <td>
+                                            <%= demanda.tipoServico %>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-warning" data-toggle="modal"
+                                                data-target="#editDemandaModal<%= demanda.id %>">
+                                                Editar
+                                            </button>
+                                            <form action="/deleteDemanda/<%= demanda.id %>" method="POST"
+                                                style="display:inline;">
+                                                <button type="submit" class="btn btn-danger">Deletar</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td>
+                                                    <%= funcionario.nome %>
+                                                </td>
+                                                <td>
+                                                    <%= funcionario.cargo %>
+                                                </td>
+                                                <td>Sem demandas</td>
+                                                <td></td>
+                                            </tr>
+                                            <% } %>
+                                                <% }); %>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal Adicionar Demanda -->
+            <div class="modal fade" id="addDemandaModal" tabindex="-1" role="dialog"
+                aria-labelledby="addDemandaModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="/createDemanda" method="POST">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addDemandaModalLabel">Cadastrar Demanda</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Formulário de criação de demandas -->
+                                <div class="form-group">
+                                    <label for="nome">Nome do Funcionário</label>
+                                    <input list="funcionario.nome" class="form-control" id="funcionario.nome"
+                                        name="nome" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dataInicio">Data Início</label>
+                                    <input type="date" class="form-control" id="dataInicio" name="dataInicio" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dataTermino">Data Término</label>
+                                    <input type="date" class="form-control" id="dataTermino" name="dataTermino"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tipoServico">Tipo de Serviço</label>
+                                    <input type="text" class="form-control" id="tipoServico" name="tipoServico"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulário de criação de demandas -->
+            <div class="modal fade" id="addDemandaModal" tabindex="-1" role="dialog"
+                aria-labelledby="addDemandaModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="form-group">
+                            <label for="nome">Nome do Funcionário</label>
+                            <input list="funcionarios" class="form-control" id="funcionarioNome" name="nome" required>
+                            <datalist id="funcionarios">
+                                <% funcionarios.forEach(funcionario=> { %>
+                                    <option value="<%= funcionario.nome %>">
+                                        <% }); %>
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <label for="dataInicio">Data Início</label>
+                            <input type="date" class="form-control" id="dataInicio" name="dataInicio" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dataTermino">Data Término</label>
+                            <input type="date" class="form-control" id="dataTermino" name="dataTermino" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipoServico">Tipo de Serviço</label>
+                            <input type="text" class="form-control" id="tipoServico" name="tipoServico" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+
+            <%- include('partials/footer.ejs') %>

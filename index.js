@@ -34,7 +34,7 @@ connection.query('CREATE DATABASE IF NOT EXISTS buffs').then(() => {
 // Middlewares
 app.use(session({
     secret: 'buffssecret',
-    cookie: { maxAge: 3000000 }, // sessão expira em 1h
+    cookie: { maxAge: 30000000 }, // sessão expira em 1h
     saveUninitialized: false, // se o usuario tentar logar no sistema ele nao vai inicializar a nova sessão
     resave: false
 }))
