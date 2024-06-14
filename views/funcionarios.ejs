@@ -1,25 +1,19 @@
 <%- include ('partials/header.ejs') %>
 <%- include ('partials/nav.ejs') %>
+<%- include ('partials/sidebar.ejs') %>
 <div class="container">
     <h1>Funcionários</h1>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addFuncionarioModal">
         Adicionar Funcionário
     </button>
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>E-mail</th>
-                <th>Telefone</th>
-                <th>Rua</th>
-                <th>Número</th>
-                <th>Bairro</th>
-                <th>Cidade</th>
-                <th>Estado</th>
-                <th>Cargo</th>
-                <th>Data de Nascimento</th>
+                <th scope="col" style="background-color: #FFCF78;">Nome</th>
+                <th scope="col" style="background-color: #FFCF78;">CPF</th>
+                <th scope="col" style="background-color: #FFCF78;">Cargo</th>
+                <th scope="col" style="background-color: #FFCF78;">Editar / Deletar</th>
             </tr>
         </thead>
         <tbody>
@@ -27,23 +21,18 @@
                 <tr>
                     <td><%= funcionario.nome %></td>
                     <td><%= funcionario.cpf %></td>
-                    <td><%= funcionario.email %></td>
-                    <td><%= funcionario.telefone %></td>
-                    <td><%= funcionario.rua %></td>
-                    <td><%= funcionario.numero %></td>
-                    <td><%= funcionario.bairro %></td>
-                    <td><%= funcionario.cidade %></td>
-                    <td><%= funcionario.estado %></td>
                     <td><%= funcionario.cargo %></td>
-                    <td><%= funcionario.dataNascimento %></td>
                     <td>
                         <button type="button" class="btn btn-warning" data-toggle="modal"
-                            data-target="#editFuncionarioModal<%= funcionario.id %>">
-                            Editar
+                            data-target="#viewFuncionarioModal<%= funcionario.id %>">Visualizar
+                        </button>
+                        <button type="button" class="btn btn-warning" data-toggle="modal"
+                            data-target="#editFuncionarioModal<%= funcionario.id %>">Editar
                         </button>
                         <form action="/deleteFuncionario/<%= funcionario.id %>" method="POST" style="display:inline;">
                             <button type="submit" class="btn btn-danger">Deletar</button>
                         </form>
+                        
                     </td>
                 </tr>
             <% }); %>
@@ -187,5 +176,46 @@
         </div>
     </div>
 <% }); %>
+
+<% funcionarios.forEach(funcionario => { %>
+    <div class="modal fade" id="viewFuncionarioModal<%= funcionario.id %>" tabindex="-1" role="dialog" aria-labelledby="viewFuncionarioModalLabel<%= funcionario.id %>" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="/viFuncionario/<%= funcionario.id %>" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewFuncionarioModalLabel<%= funcionario.id %>">Visualizar Funcionário</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Formulário de edição de funcionário -->
+                        <div class="card" style="width: 18rem;">
+                            <img src="../public/imgs/user.jpg" class="card-img-top">
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><%= funcionario.nome %></p>
+                                <p class="card-text"><%= funcionario.cpf %></p>
+                                <p class="card-text"><%= funcionario.email %></p>
+                                <p class="card-text"><%= funcionario.telefone %></p>
+                                <p class="card-text"><%= funcionario.rua %></p>
+                                <p class="card-text"><%= funcionario.numero %></p>
+                                <p class="card-text"><%= funcionario.bairro %></p>
+                                <p class="card-text"><%= funcionario.cidade %></p>
+                                <p class="card-text"><%= funcionario.estado %></p>
+                                <p class="card-text"><%= funcionario.cargo %></p>
+                                <p class="card-text"><%= funcionario.dataNascimento %></p>
+                          </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<% }); %>
+
 
 <%- include ('partials/footer.ejs') %>
