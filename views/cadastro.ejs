@@ -8,84 +8,72 @@
             </div>
         </div>
         <div class="direito">
-            <% if(messages.danger) { %>
-                <div class="alert alert-danger">
-                    <%= messages.danger %>
-                </div>
-                <% } %>
+            <div class="box2">
+                <div class="col-md-8 col-sm-12 ajusta"
+                    style="display: flex; align-items: center;justify-content: center;">
 
-                    <% if(messages.success) { %>
-                        <div class="alert alert-success">
-                            <%= messages.success %>
-                        </div>
-                        <% } %>
-                            <div class="box2">
-                                <div class="col-md-6 col-sm-12 ajusta"
-                                    style="display: flex; align-items: center;justify-content: center;">
-
-                                    <div class="login-form" style="background-color: #FEF5E5; ">
-                                        <div class="login">
-                                            <h1 class="h1" style="font-family: 'Inter', sans-serif;font-weight: 600;">
-                                                Cadastre-se</h1>
-                                            <p>Crie sua conta agora. Entraremos em contato depois da criação. </p>
-                                            <br>
-                                            <form action="/createUser" method="post">
-                                                <div class="form-group">
-                                                    <label style="font-size: 15px;"><strong>Nome de
-                                                            usuário</strong></label>
-                                                    <input class="form-control"
-                                                        style="background-color:#FFF5F5 ;border: 1px black solid;"
-                                                        type="text" name="name"
-                                                        placeholder="Digite o seu nome de usuário" required>
-                                                    <br>
-                                                    <label style="font-size: 15px;"><strong>Endereço de
-                                                            email</strong></label>
-                                                    <input class="form-control"
-                                                        style="background-color:#FFF5F5 ;border: 1px black solid;"
-                                                        type="email" name="email" placeholder="exemplo@email.com"
-                                                        required>
-                                                </div>
-                                                <br>
-                                                <div class="form-group">
-                                                    <label style="font-size: 15px;"><Strong>Senha:</Strong></label>
-                                                    <input class="form-control"
-                                                        style="background-color:#FFF5F5 ;border: 1px black solid;"
-                                                        type="password" name="password"
-                                                        placeholder="Insira a sua senha." required>
-                                                    <br>
-
-                                                    <label for="exampleInputPassword1"
-                                                        style="font-size: 15px;"><Strong>Confirmar
-                                                            senha:</Strong></label>
-                                                    <input class="form-control"
-                                                        style="background-color:#FFF5F5 ;border: 1px black solid;"
-                                                        type="password" name="confirmPassword"
-                                                        placeholder="Confirme a sua senha." required>
-                                                </div>
-
-                                                <br>
-                                                <button type="submit" class="btn btn-primary"
-                                                    style="width: 100%; background-color: #FFCF78;border: 0px; color: #43310B; font-weight: 400;">Cadastre-se</button>
-
-                                            </form>
-                                            <div class="col-md-6 col-sm-12"
-                                                style="margin-top: 15%; border: 1px solid #CACACA; width: 100%; border-radius: 5px; padding: 40px;">
-                                                <h1>Inscrever-se</h1>
-                                                <p>Faça login com os dados inseridos durante seu cadastro.</p>
-
-                                                <button type="submit" class="btn btn-primary"
-                                                    style="width: 100%; background-color: #FFCF78;border: 0px; color: #43310B; font-weight: 400;">
-                                                    <a style="color: #864E04; text-decoration: none;" href="/login">Log
-                                                        in</a>
-                                                </button>
-                                            </div>
-                                        </div>
-
-
-
-                                    </div>
+                    <div class="login-form" style="background-color: #FEF5E5; ">
+                        <div class="login">
+                            <h1 class="h1" style="font-family: 'Inter', sans-serif;font-weight: 600;">Cadastre-se</h1>
+                            <p>Crie sua conta agora. Entraremos em contato depois da criação. </p>
+                            <br>
+                            <form action="/createUser" method="post">
+                                <div class="form-group">
+                                    <label style="font-size: 15px;"><strong>Nome de
+                                            usuário</strong></label>
+                                    <input class="form-control"
+                                        style="background-color:#FFF5F5 ;border: 1px black solid;" type="text"
+                                        name="name" placeholder="Digite o seu nome de usuário" required>
+                                    <br>
+                                    <label style="font-size: 15px;"><strong>Endereço de
+                                            email</strong></label>
+                                    <input class="form-control"
+                                        style="background-color:#FFF5F5 ;border: 1px black solid;" type="email"
+                                        name="email" placeholder="exemplo@email.com" required>
                                 </div>
+                                <br>
+                                <div class="form-group">
+                                    <label style="font-size: 15px;"><Strong>Senha:</Strong></label>
+                                    <input class="form-control"
+                                        style="background-color:#FFF5F5 ;border: 1px black solid;" type="password"
+                                        name="password" placeholder="Insira a sua senha." required>
+                                    <br>
+
+                                    <label for="exampleInputPassword1" style="font-size: 15px;"><Strong>Confirmar
+                                            senha:</Strong></label>
+                                    <input class="form-control"
+                                        style="background-color:#FFF5F5 ;border: 1px black solid;" type="password"
+                                        name="confirmPassword" placeholder="Confirme a sua senha." required>
+                                </div>
+
+                                <br>
+                                <button type="submit" class="btn btn-primary" style="width: 100%; background-color: #FFCF78;border: 0px; color: #43310B; font-weight: 400;">Cadastre-se</button>
+                                
+                                <% if(messages.danger) { %>
+                                    <div class="alert alert-danger" style="display:flex; height: 50px;position: absolute;margin-top: 10px;">
+                                        <%= messages.danger %>
+                                    </div>
+                                <% } %>
+
+                                <% if(messages.success) { %>
+                                        <div class="alert alert-success" style="display: flex; height: 50px;position: absolute;margin-top: 10px;">
+                                            <%= messages.success %>
+                                        </div>
+                                <% } %>
+                            </form>
+                            <div class="col-md-10 col-sm-12" style="margin-top: 15%; border: 1px solid #CACACA; width: 100%; border-radius: 5px; padding: 40px; margin-left: 50px;">
+                                <h1>Inscrever-se</h1>
+                                <p>Faça login com os dados inseridos durante seu cadastro.</p>
+
+                                <button type="submit" class="btn btn-primary"
+                                    style="width: 100%; background-color: #FFCF78;border: 0px; color: #43310B; font-weight: 400;">
+                                    <a style="color: #864E04; text-decoration: none;" href="/login">Login</a>
+                                </button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <%- include ('partials/footer.ejs') %>
