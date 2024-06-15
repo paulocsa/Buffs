@@ -1,221 +1,336 @@
 <%- include ('partials/header.ejs') %>
-<%- include ('partials/nav.ejs') %>
-<%- include ('partials/sidebar.ejs') %>
-<div class="container">
-    <h1>Funcionários</h1>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addFuncionarioModal">
-        Adicionar Funcionário
-    </button>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col" style="background-color: #FFCF78;">Nome</th>
-                <th scope="col" style="background-color: #FFCF78;">CPF</th>
-                <th scope="col" style="background-color: #FFCF78;">Cargo</th>
-                <th scope="col" style="background-color: #FFCF78;">Editar / Deletar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% funcionarios.forEach(funcionario => { %>
-                <tr>
-                    <td><%= funcionario.nome %></td>
-                    <td><%= funcionario.cpf %></td>
-                    <td><%= funcionario.cargo %></td>
-                    <td>
-                        <button type="button" class="btn btn-warning" data-toggle="modal"
-                            data-target="#viewFuncionarioModal<%= funcionario.id %>">Visualizar
-                        </button>
-                        <button type="button" class="btn btn-warning" data-toggle="modal"
-                            data-target="#editFuncionarioModal<%= funcionario.id %>">Editar
-                        </button>
-                        <form action="/deleteFuncionario/<%= funcionario.id %>" method="POST" style="display:inline;">
-                            <button type="submit" class="btn btn-danger">Deletar</button>
-                        </form>
-                        
-                    </td>
-                </tr>
-            <% }); %>
-        </tbody>
-    </table>
-</div>
-
-<!-- Modal Adicionar Funcionário -->
-<div class="modal fade" id="addFuncionarioModal" tabindex="-1" role="dialog" aria-labelledby="addFuncionarioModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="/createFuncionario" method="POST">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addFuncionarioModalLabel">Cadastrar Funcionário</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+    <%- include ('partials/nav.ejs') %>
+        <%- include ('partials/sidebar.ejs') %>
+            <div
+                style="background-color: #FEF5E4;display: flex; width: 100%;flex-direction: column;flex-direction: column; justify-content: flex-start; ">
+                <div style="background-color: #F5F5F5; width: 100%;height: 70px; margin-bottom: 10px;width: 100%;">
+                    <p style="margin-top: 20px; margin-left: 20px;">Página inicial</p>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal"
+                        data-target="#addFuncionarioModal"
+                        style="justify-content: right; display: flex;margin-left: auto; margin-right: 10px;margin-top: -40px;background-color: #2D220A;">
+                        Adicionar Funcionário
                     </button>
                 </div>
-                <div class="modal-body">
-                    <!-- Formulário de criação de funcionário -->
-                    <div class="form-group">
-                        <label for="nome">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" required>
+                <!-- Barra de pesquisa -->
+                <div class="row mt-3" style="width: 95%; margin-left: 40px;">
+                    <div class="col">
+                        <form class="d-flex" id="searchForm">
+                            <input class="form-control mr-2" type="search" placeholder="Pesquisar funcionário"
+                                aria-label="Pesquisar" id="searchInput">
+                            <button class="btn btn-secondary" style="background-color: #2D220A;"
+                                type="submit">Pesquisar</button>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label for="cpf">CPF</label>
-                        <input type="text" class="form-control" id="cpf" name="cpf" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">E-mail</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="telefone">Telefone</label>
-                        <input type="text" class="form-control" id="telefone" name="telefone" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="rua">Rua</label>
-                        <input type="text" class="form-control" id="rua" name="rua" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="numero">Número</label>
-                        <input type="text" class="form-control" id="numero" name="numero" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="bairro">Bairro</label>
-                        <input type="text" class="form-control" id="bairro" name="bairro" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cidade">Cidade</label>
-                        <input type="text" class="form-control" id="cidade" name="cidade" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="estado">Estado</label>
-                        <input type="text" class="form-control" id="estado" name="estado" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cargo">Cargo</label>
-                        <input type="text" class="form-control" id="cargo" name="cargo" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="dataNascimento">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required>
-                    </div>
-                    
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+                <div class="div-infos-func">
+                    <table class="table table-striped" id="funcionariosTable">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="background-color: #FFCF78;">Nome</th>
+                                <th scope="col" style="background-color: #FFCF78;">CPF</th>
+                                <th scope="col" style="background-color: #FFCF78;">Cargo</th>
+                                <th scope="col" style="background-color: #FFCF78;"></th>
+                                <th scope="col" style="background-color: #FFCF78;"></th>
+                                <th scope="col" style="background-color: #FFCF78;"></th>
+                                <th scope="col" style="background-color: #FFCF78;">Editar / Deletar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% funcionarios.forEach(funcionario=> { %>
+                                <tr>
+                                    <td>
+                                        <%= funcionario.nome %>
+                                    </td>
+                                    <td>
+                                        <%= funcionario.cpf %>
+                                    </td>
+                                    <td>
+                                        <%= funcionario.cargo %>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning" data-toggle="modal"
+                                            data-target="#viewFuncionarioModal<%= funcionario.id %>">Visualizar
+                                        </button>
+                                        <button type="button" class="btn btn-warning" data-toggle="modal"
+                                            data-target="#editFuncionarioModal<%= funcionario.id %>">Editar
+                                        </button>
+                                        <form action="/deleteFuncionario/<%= funcionario.id %>" method="POST"
+                                            style="display:inline;">
+                                            <button type="submit" class="btn btn-danger">Deletar</button>
+                                        </form>
 
-<!-- Modal Editar Funcionário -->
-<% funcionarios.forEach(funcionario => { %>
-    <div class="modal fade" id="editFuncionarioModal<%= funcionario.id %>" tabindex="-1" role="dialog" aria-labelledby="editFuncionarioModalLabel<%= funcionario.id %>" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form action="/updateFuncionario/<%= funcionario.id %>" method="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editFuncionarioModalLabel<%= funcionario.id %>">Editar Funcionário</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Formulário de edição de funcionário -->
-                        <div class="form-group">
-                            <label for="nome<%= funcionario.id %>">Nome</label>
-                            <input type="text" class="form-control" id="nome<%= funcionario.id %>" name="nome" value="<%= funcionario.nome %>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="cpf<%= funcionario.id %>">CPF</label>
-                            <input type="text" class="form-control" id="cpf<%= funcionario.id %>" name="cpf" value="<%= funcionario.cpf %>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email<%= funcionario.id %>">E-mail</label>
-                            <input type="email" class="form-control" id="email<%= funcionario.id %>" name="email" value="<%= funcionario.email %>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="telefone<%= funcionario.id %>">Telefone</label>
-                            <input type="text" class="form-control" id="telefone<%= funcionario.id %>" name="telefone" value="<%= funcionario.telefone %>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="rua">Rua</label>
-                            <input type="text" class="form-control" id="rua" name="rua" value="<%= funcionario.rua %>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="numero">Número</label>
-                            <input type="text" class="form-control" id="numero" name="numero" value="<%= funcionario.numero %>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="bairro">Bairro</label>
-                            <input type="text" class="form-control" id="bairro" name="bairro" value="<%= funcionario.bairro %>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="cidade">Cidade</label>
-                            <input type="text" class="form-control" id="cidade" name="cidade" value="<%= funcionario.cidade %>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="estado">Estado</label>
-                            <input type="text" class="form-control" id="estado" name="estado" value="<%= funcionario.estado %>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="cargo">Cargo</label>
-                            <input type="text" class="form-control" id="cargo" name="cargo" value="<%= funcionario.cargo %>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="dataNascimento">Data de Nascimento</label>
-                            <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" value="<%= funcionario.dataNascimento %>" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                    </div>
-                </form>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </div>
-<% }); %>
 
-<% funcionarios.forEach(funcionario => { %>
-    <div class="modal fade" id="viewFuncionarioModal<%= funcionario.id %>" tabindex="-1" role="dialog" aria-labelledby="viewFuncionarioModalLabel<%= funcionario.id %>" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form action="/viFuncionario/<%= funcionario.id %>" method="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="viewFuncionarioModalLabel<%= funcionario.id %>">Visualizar Funcionário</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Formulário de edição de funcionário -->
-                        <div class="card" style="width: 18rem;">
-                            <img src="../public/imgs/user.jpg" class="card-img-top">
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    // Função para filtrar funcionários
+                    $("#searchForm").submit(function (event) {
+                        event.preventDefault(); // Impede o envio do formulário
+
+                        var searchTerm = $("#searchInput").val().toLowerCase(); // Obtém o termo de pesquisa
+                        $("#funcionariosTable tbody tr").filter(function () { // Filtra as linhas da tabela
+                            $(this).toggle($(this).text().toLowerCase().indexOf(searchTerm) > -1); // Exibe ou oculta a linha com base no resultado da pesquisa
+                        });
+                    });
+                });
+            </script>
+
+            <!-- Modal Adicionar Funcionário -->
+            <div class="modal fade" id="addFuncionarioModal" tabindex="-1" role="dialog"
+                aria-labelledby="addFuncionarioModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="/createFuncionario" method="POST">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addFuncionarioModalLabel">Cadastrar Funcionário</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            <div class="card-body">
-                                <p class="card-text"><%= funcionario.nome %></p>
-                                <p class="card-text"><%= funcionario.cpf %></p>
-                                <p class="card-text"><%= funcionario.email %></p>
-                                <p class="card-text"><%= funcionario.telefone %></p>
-                                <p class="card-text"><%= funcionario.rua %></p>
-                                <p class="card-text"><%= funcionario.numero %></p>
-                                <p class="card-text"><%= funcionario.bairro %></p>
-                                <p class="card-text"><%= funcionario.cidade %></p>
-                                <p class="card-text"><%= funcionario.estado %></p>
-                                <p class="card-text"><%= funcionario.cargo %></p>
-                                <p class="card-text"><%= funcionario.dataNascimento %></p>
-                          </div>
+                            <div class="modal-body">
+                                <!-- Formulário de criação de funcionário -->
+                                <div class="form-group">
+                                    <label for="nome">Nome</label>
+                                    <input type="text" class="form-control" id="nome" name="nome" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cpf">CPF</label>
+                                    <input type="text" class="form-control" id="cpf" name="cpf" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">E-mail</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="telefone">Telefone</label>
+                                    <input type="text" class="form-control" id="telefone" name="telefone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rua">Rua</label>
+                                    <input type="text" class="form-control" id="rua" name="rua" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="numero">Número</label>
+                                    <input type="text" class="form-control" id="numero" name="numero" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bairro">Bairro</label>
+                                    <input type="text" class="form-control" id="bairro" name="bairro" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cidade">Cidade</label>
+                                    <input type="text" class="form-control" id="cidade" name="cidade" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="estado">Estado</label>
+                                    <input type="text" class="form-control" id="estado" name="estado" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cargo">Cargo</label>
+                                    <input type="text" class="form-control" id="cargo" name="cargo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dataNascimento">Data de Nascimento</label>
+                                    <input type="date" class="form-control" id="dataNascimento" name="dataNascimento"
+                                        required>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
-    </div>
-<% }); %>
+
+            <!-- Modal Editar Funcionário -->
+            <% funcionarios.forEach(funcionario=> { %>
+                <div class="modal fade" id="editFuncionarioModal<%= funcionario.id %>" tabindex="-1" role="dialog"
+                    aria-labelledby="editFuncionarioModalLabel<%= funcionario.id %>" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form action="/updateFuncionario/<%= funcionario.id %>" method="POST">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editFuncionarioModalLabel<%= funcionario.id %>">Editar
+                                        Funcionário</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Formulário de edição de funcionário -->
+                                    <div class="form-group">
+                                        <label for="nome<%= funcionario.id %>">Nome</label>
+                                        <input type="text" class="form-control" id="nome<%= funcionario.id %>"
+                                            name="nome" value="<%= funcionario.nome %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cpf<%= funcionario.id %>">CPF</label>
+                                        <input type="text" class="form-control" id="cpf<%= funcionario.id %>" name="cpf"
+                                            value="<%= funcionario.cpf %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email<%= funcionario.id %>">E-mail</label>
+                                        <input type="email" class="form-control" id="email<%= funcionario.id %>"
+                                            name="email" value="<%= funcionario.email %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefone<%= funcionario.id %>">Telefone</label>
+                                        <input type="text" class="form-control" id="telefone<%= funcionario.id %>"
+                                            name="telefone" value="<%= funcionario.telefone %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="rua">Rua</label>
+                                        <input type="text" class="form-control" id="rua" name="rua"
+                                            value="<%= funcionario.rua %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="numero">Número</label>
+                                        <input type="text" class="form-control" id="numero" name="numero"
+                                            value="<%= funcionario.numero %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bairro">Bairro</label>
+                                        <input type="text" class="form-control" id="bairro" name="bairro"
+                                            value="<%= funcionario.bairro %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cidade">Cidade</label>
+                                        <input type="text" class="form-control" id="cidade" name="cidade"
+                                            value="<%= funcionario.cidade %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="estado">Estado</label>
+                                        <input type="text" class="form-control" id="estado" name="estado"
+                                            value="<%= funcionario.estado %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cargo">Cargo</label>
+                                        <input type="text" class="form-control" id="cargo" name="cargo"
+                                            value="<%= funcionario.cargo %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dataNascimento">Data de Nascimento</label>
+                                        <input type="date" class="form-control" id="dataNascimento"
+                                            name="dataNascimento" value="<%= funcionario.dataNascimento %>" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+
+                    <% funcionarios.forEach(funcionario=> { %>
+                        <div class="modal fade" id="viewFuncionarioModal<%= funcionario.id %>" tabindex="-1"
+                            role="dialog" aria-labelledby="viewFuncionarioModalLabel<%= funcionario.id %>"
+                            aria-hidden="true">
+                            <div class="modal-dialog" role="document" style="max-width: 50%; max-height: 70%;margin-top: 7%;">
+                                <div class="modal-content">
+                                    <form action="/viFuncionario/<%= funcionario.id %>" method="POST">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="viewFuncionarioModalLabel<%= funcionario.id %>">
+                                                Visualizar <%= funcionario.nome %> - <%= funcionario.cargo %>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Formulário de edição de funcionário -->
+                                            <div class="row">
+                                                <p>Dados Pessoais: </p>
+                                                <div class="col">
+                                                    <p>
+                                                        <i class="fa-solid fa-user"></i>Nome: <br><%= funcionario.nome %>
+                                                    </p>
+                                                </div>
+                                                <div class="col">
+                                                    <p>
+                                                        <i class="fa-solid fa-address-card"></i>CPF: <br><%= funcionario.cpf %>
+                                                    </p>
+                                                </div>
+                                                <div class="col">
+                                                    <p>
+                                                        <i class="fa-solid fa-flag-usa"></i>Data Nascimento: <br><%= funcionario.dataNascimento %>
+                                                    </p>
+                                                </div>
+                                                                <div class="w-100" style="margin-top: 5px;"></div>
+                                                <div class="col">
+                                                    <p>
+                                                        <i class="fa-solid fa-tree-city"></i>Cargo: <br><%= funcionario.cargo %>
+                                                    </p>
+                                                </div>
+                                                <div class="col">
+                                                    <p>
+                                                        <i class="fa-solid fa-envelope"></i>E-mail: <br><%= funcionario.email %>
+                                                    </p>
+                                                </div>
+                                                <div class="col">
+                                                    <p>
+                                                        <i class="fa-solid fa-phone"></i>Telefone: <br><%= funcionario.telefone %>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" style="margin-top: 25px;">
+                                                <p>Endereço: </p>
+                                                <div class="col">
+                                                    <p class="card-text">
+                                                        <i class="fa-solid fa-road"></i>Rua: <br><%= funcionario.rua %>
+                                                    </p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">
+                                                        <i class="fa-solid fa-house"></i>Nº: <br><%= funcionario.numero %>
+                                                    </p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">
+                                                        <i class="fa-solid fa-location-dot"></i>Bairro: <br><%= funcionario.bairro %>
+                                                    </p>
+                                                </div>
+                                                            <div class="w-100" style="margin-top: 5px;"></div>
+                                                <div class="col">
+                                                    <p class="card-text">
+                                                        <i class="fa-solid fa-tree-city"></i>Cidade: <br><%= funcionario.cidade %>
+                                                    </p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">
+                                                        <i class="fa-solid fa-flag-usa"></i>Estado: <br><%= funcionario.estado %>
+                                                    </p>
+                                                </div>
+                                                <div class="col">
+
+                                                </div>
+                                            </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-warning"
+                                                data-dismiss="modal">OK</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
 
 
-<%- include ('partials/footer.ejs') %>
+                            <%- include ('partials/footer.ejs') %>

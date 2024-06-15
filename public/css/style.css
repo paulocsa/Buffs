@@ -125,7 +125,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-
 }
 
 .div-logout{
@@ -152,3 +151,31 @@ p{
     font-family:'inter-medium' ;
     src: url(../font/font-Inter/Inter-Medium.otf);
   }
+
+
+  /* CSS FUNCIONARIOS */
+.div-add{
+    align-items: center;
+    justify-content: right;
+    display: flex;
+    margin-left: auto;
+    padding-right: 10px;
+}
+
+.div-infos-func{
+    width: 95%;
+    height: auto; 
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    border-radius: 10px; 
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
