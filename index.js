@@ -7,11 +7,13 @@ import flash from 'express-flash'
 import connection from './config/sequelize-config.js'
 import UsersController from './controllers/UsersController.js'
 import BufalosController from './controllers/BufalosController.js'
+import ZootecnicoController from './controllers/ZootecnicoController.js'
 import FuncionariosController from './controllers/FuncionariosController.js'
 import DemandasController from './controllers/DemandasController.js'
 import Auth from './middleware/Auth.js'
 import Funcionario from './models/Funcionario.js'
 import Bufalo from './models/Bufalo.js'
+import Zootecnico from './models/Zootecnico.js'
 
 const app = express()
 app.set('view engine', 'ejs')
@@ -44,6 +46,7 @@ app.use(flash())
 // Rotas
 app.use('/', UsersController)
 app.use('/', BufalosController)
+app.use('/', ZootecnicoController)
 app.use('/', FuncionariosController)
 app.use('/', DemandasController)
 
@@ -71,8 +74,8 @@ app.get('/', Auth, (req, res) => {
                 ultimoId: ultimoId,
                 bufalos: bufalos,
                 ultimoBufaloId: ultimoBufaloId,
-                user: user.name 
-            
+                user: user.name
+
             });
         })
         .catch(error => {
