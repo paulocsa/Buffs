@@ -1,70 +1,48 @@
-<%- include ('partials/header.ejs') %>
+ 
+    <!--  -->
 
 
-    <div class="section1">
-        <div class="esquerdo">
-            <div class="box1">
-                <img src="/imgs/logo-svg.svg" alt="">
+    <%- include ('partials/header.ejs') %>
+<div class="container-login-cadastro">
+    <div class="image-side">
+        <img src="imgs/fundo-login.png" alt="Imagem de Login" class="background-image">
+        <img src="imgs/logo-svg.svg" alt="Bem Vindo" class="foreground-image">
+    </div>
+    <div class="form-side">
+        <% if(messages.danger) { %>
+            <div class="alert alert-danger">
+                <%= messages.danger %>
             </div>
-        </div>
-        <div class="direito">
-            <% if(messages.danger) { %>
-                <div class="alert alert-danger">
-                    <%= messages.danger %>
-                </div>
-                <% } %>
+            <% } %>
 
-                    <% if(messages.success) { %>
-                        <div class="alert alert-success">
-                            <%= messages.success %>
-                        </div>
-                        <% } %>
-                            <div class="box2">
-                                <div class="col-md-6 col-sm-12 ajusta" style="display: flex; align-items: center;">
-                                    <div class="login-form" style="background-color: #FEF5E5; ">
-                                        <div class="login">
-                                            <h1 class="h1" style="font-family: 'Inter', sans-serif;font-weight: 600;">
-                                                Login</h1>
-                                            <p>Faça login com os dados inseridos durante seu cadastro.</p>
-                                            <br>
-                                            <form action="/authenticate" method="post">
-                                                <div class="form-group">
-                                                    <label style="font-size: 15px;"><strong>Endereço de
-                                                            email</strong></label>
-                                                    <input class="form-control"
-                                                        style="background-color:#FFF5F5 ;border: 1px black solid;"
-                                                        type="email" name="email" placeholder="exemplo@email.com"
-                                                        required>
-                                                </div>
-                                                <br>
-                                                <div class="form-group">
-                                                    <label style="font-size: 15px;"><Strong>Senha:</Strong></label>
-                                                    <input class="form-control"
-                                                        style="background-color:#FFF5F5 ;border: 1px black solid;"
-                                                        type="password" name="password"
-                                                        placeholder="Insira a sua senha." required>
-                                                    <br>
-                                                </div>
-                                                <br>
-                                                <button type="submit" class="btn btn-primary"
-                                                    style="width: 100%; background-color: #FFCF78;border: 0px; color: #43310B; font-weight: 400;">
-                                                    Login </button>
-                                            </form>
-                                            <div class="col-md-6 col-sm-12"
-                                                style="margin-top: 15%; border: 1px solid #CACACA; width: 100%; border-radius: 5px; padding: 40px;">
-                                                <h1>Inscrever-se</h1>
-                                                <p>Faça login com os dados inseridos durante seu cadastro.</p>
-                                                <button type="submit" class="btn btn-primary"
-                                                    style="width: 100%; background-color: #FFCF78;border: 0px; color: #43310B; font-weight: 400;">
-                                                    <a style="color: #864E04; text-decoration: none;"
+                <% if(messages.success) { %>
+                    <div class="alert alert-success">
+                        <%= messages.success %>
+                    </div>
+                    <% } %>
+        <form action="/authenticate" method="post">
+            <h2>Login</h2>
+            <p class="login-info">Faça login com os dados inseridos durante seu cadastro.</p>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="exemplo@email.com" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" name="password"
+                placeholder="Insira a sua senha." id="passwordgit" required>
+            </div>
+            <button type="submit">Entrar</button>
+        </form>
+        <div class="signup" style="margin-top: 50px;">
+            <h2>Inscrever-se</h2>
+            <p class="signup-info">Crie sua conta agora. Entraremos em contato depois da criação.</p>
+            <button class="signup-button">
+                <a style="color: #864E04; text-decoration: none;"
                                                         href="/cadastro">Cadastre-se</a>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            </button>
         </div>
     </div>
+</div>
 
-    <%- include ('partials/footer.ejs') %>
+<%- include ('partials/footer.ejs') %>
