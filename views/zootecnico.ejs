@@ -1,0 +1,97 @@
+<%- include('partials/header.ejs') %>
+<%- include('partials/nav.ejs') %>
+<%- include('partials/sidebar.ejs') %>
+
+<div class="container">
+    <h1>Controle Zootécnico</h1>
+    <button type="button" class="btn btn-primary">
+        Exportar Dados
+    </button>
+
+    <!-- Gráfico de Pizza -->
+    <canvas id="graficoZootec" width="20" height="20"></canvas>
+
+    <!-- Tabela de Alertas -->
+    <h3>Alertas</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>TAG</th>
+                <th>Comprimento Corporal</th>
+                <th>Circunferência Corporal</th>
+                <th>Altura da Cernelha</th>
+                <th>Suplementação</th>
+                <th>Tipo de Ração</th>
+                <th>Tipo de Pastagem</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% bufalos.forEach(bufalo => { %>
+                <tr>
+                    <td><%= bufalo.tag %></td>
+                    <td><%= bufalo.comprimentoCorporal %></td>
+                    <td><%= bufalo.circunferenciaCorporal %></td>
+                    <td><%= bufalo.alturaCernelha %></td>
+                    <td><%= bufalo.suplementacao %></td>
+                    <td><%= bufalo.tipoRacao %></td>
+                    <td><%= bufalo.tipoPastagem %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('partials/footer.ejs') %>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const bufalosSuplementacao = <%= bufalosSuplementacao %>
+        const bufalosObservacao = <%= bufalosObservacao %>
+
+        // Criação do gráfico de pizza
+        const ctx = document.getElementById('graficoZootec').getContext('2d')
+        const graficoZootec = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Em Suplementação', 'Em Observação'],
+                datasets: [{
+                    label: 'Búfalos',
+                    data: [bufalosSuplementacao, bufalosObservacao],
+                    backgroundColor: [
+                        'rgba(242, 184, 77, 255)',
+                        'rgba(134, 78, 4, 255)',
+                    ],
+                    borderColor: [
+                        'rgba(242, 184, 77, 255)',
+                        'rgba(134, 78, 4, 255)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(0)
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<style>
+    #graficoZootec {
+        max-width: 200px; /* Altere para o tamanho desejado */
+        max-height: 200px; /* Altere para o tamanho desejado */
+    }
+</style>

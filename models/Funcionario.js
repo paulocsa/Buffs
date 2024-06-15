@@ -46,7 +46,7 @@ const Funcionario = connection.define('funcionarios', {
         type: Sequelize.DATEONLY,
         allowNull: false
     }
-});
+})
 
 Funcionario.sync({ force: false })
 

@@ -13,11 +13,6 @@ router.get('/sanitario', (req, res) => {
     res.render('sanitario')
 })
 
-// Rota do controle zootecnico
-router.get('/zootecnico', (req, res) => {
-    res.render('zootecnico')
-})
-
 // Rota do controle reproducao
 router.get('/reproducao', (req, res) => {
     res.render('reproducao')
