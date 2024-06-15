@@ -238,99 +238,52 @@
                 </div>
                 <% }); %>
 
-                    <% funcionarios.forEach(funcionario=> { %>
-                        <div class="modal fade" id="viewFuncionarioModal<%= funcionario.id %>" tabindex="-1"
-                            role="dialog" aria-labelledby="viewFuncionarioModalLabel<%= funcionario.id %>"
-                            aria-hidden="true">
-                            <div class="modal-dialog" role="document" style="max-width: 50%; max-height: 70%;margin-top: 7%;">
-                                <div class="modal-content">
-                                    <form action="/viFuncionario/<%= funcionario.id %>" method="POST">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="viewFuncionarioModalLabel<%= funcionario.id %>">
-                                                Visualizar <%= funcionario.nome %> - <%= funcionario.cargo %>
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <!-- Formulário de edição de funcionário -->
+                <% funcionarios.forEach(funcionario => { %>
+                    <div class="modal fade" id="viewFuncionarioModal<%= funcionario.id %>" tabindex="-1" role="dialog" aria-labelledby="viewFuncionarioModalLabel<%= funcionario.id %>" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <form action="/viFuncionario/<%= funcionario.id %>" method="POST">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="viewFuncionarioModalLabel<%= funcionario.id %>">Visualizar Funcionário</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Formulário de edição de funcionário -->
+                                        <div class="container">
+                                            infos:
                                             <div class="row">
-                                                <p>Dados Pessoais: </p>
-                                                <div class="col">
-                                                    <p>
-                                                        <i class="fa-solid fa-user"></i>Nome: <br><%= funcionario.nome %>
-                                                    </p>
-                                                </div>
-                                                <div class="col">
-                                                    <p>
-                                                        <i class="fa-solid fa-address-card"></i>CPF: <br><%= funcionario.cpf %>
-                                                    </p>
-                                                </div>
-                                                <div class="col">
-                                                    <p>
-                                                        <i class="fa-solid fa-flag-usa"></i>Data Nascimento: <br><%= funcionario.dataNascimento %>
-                                                    </p>
-                                                </div>
-                                                                <div class="w-100" style="margin-top: 5px;"></div>
-                                                <div class="col">
-                                                    <p>
-                                                        <i class="fa-solid fa-tree-city"></i>Cargo: <br><%= funcionario.cargo %>
-                                                    </p>
-                                                </div>
-                                                <div class="col">
-                                                    <p>
-                                                        <i class="fa-solid fa-envelope"></i>E-mail: <br><%= funcionario.email %>
-                                                    </p>
-                                                </div>
-                                                <div class="col">
-                                                    <p>
-                                                        <i class="fa-solid fa-phone"></i>Telefone: <br><%= funcionario.telefone %>
-                                                    </p>
-                                                </div>
+                                                <div class="col">Nome:<br><%= funcionario.nome %></div>
+                                                <div class="col">CPF:<br><%= funcionario.cpf %></div>
                                             </div>
-
-                                            <div class="row" style="margin-top: 25px;">
-                                                <p>Endereço: </p>
-                                                <div class="col">
-                                                    <p class="card-text">
-                                                        <i class="fa-solid fa-road"></i>Rua: <br><%= funcionario.rua %>
-                                                    </p>
-                                                </div>
-                                                <div class="col">
-                                                    <p class="card-text">
-                                                        <i class="fa-solid fa-house"></i>Nº: <br><%= funcionario.numero %>
-                                                    </p>
-                                                </div>
-                                                <div class="col">
-                                                    <p class="card-text">
-                                                        <i class="fa-solid fa-location-dot"></i>Bairro: <br><%= funcionario.bairro %>
-                                                    </p>
-                                                </div>
-                                                            <div class="w-100" style="margin-top: 5px;"></div>
-                                                <div class="col">
-                                                    <p class="card-text">
-                                                        <i class="fa-solid fa-tree-city"></i>Cidade: <br><%= funcionario.cidade %>
-                                                    </p>
-                                                </div>
-                                                <div class="col">
-                                                    <p class="card-text">
-                                                        <i class="fa-solid fa-flag-usa"></i>Estado: <br><%= funcionario.estado %>
-                                                    </p>
-                                                </div>
-                                                <div class="col">
-
-                                                </div>
+                                            Contato:
+                                            <div class="row">
+                                                <div class="col">E-mail:<br><%= funcionario.email %></div>
+                                                <div class="col">Telefone:<br><%= funcionario.telefone %></div>
+                                            </div><div class="row">
+                                                <div class="col">Cargo:<br><%= funcionario.cargo %></div>
+                                                <div class="col">Data Nascimento:<br><%= funcionario.dataNascimento %></div>
                                             </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-warning"
-                                                data-dismiss="modal">OK</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                            <div class="row">
+                                                <p class="card-text"><%= funcionario.rua %></p>
+                                                <p class="card-text"><%= funcionario.numero %></p>
+                                                <p class="card-text"><%= funcionario.bairro %></p>
+                                                <p class="card-text"><%= funcionario.cidade %></p>
+                                                <p class="card-text"><%= funcionario.estado %></p>
+                                            </div>
+                                          </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                        <% }); %>
+                    </div>
+                <% }); %>
+                
 
 
                             <%- include ('partials/footer.ejs') %>
