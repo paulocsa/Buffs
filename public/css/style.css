@@ -3,7 +3,7 @@
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    /*box-sizing: border-box;*/
 }
 
 body, html {
@@ -458,3 +458,7 @@ button:hover {
         margin-top: 50px; /* Espaço para a header em telas menores */
     }
 }
+
+
+/* funcionarios */
+

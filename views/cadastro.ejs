@@ -1,4 +1,4 @@
-<%- include ('partials/header.ejs') %>
+<%- include('partials/header.ejs') %>
 
 <div class="container-login-cadastro">
     <div class="image-side">
@@ -10,20 +10,18 @@
             <div class="alert alert-danger">
                 <%= messages.danger %>
             </div>
-            <% } %>
-
-                <% if(messages.success) { %>
-                    <div class="alert alert-success">
-                        <%= messages.success %>
-                    </div>
-                    <% } %>
+        <% } %>
+        <% if(messages.success) { %>
+            <div class="alert alert-success">
+                <%= messages.success %>
+            </div>
+        <% } %>
         <form action="/createUser" method="post">
             <h2>Cadastre-se</h2>
             <p class="login-info">Crie sua conta agora. Entraremos em contato depois da criação.</p>
             <div class="form-group">
                 <label for="name">Nome de usuário</label>
-                <input type="text" id="name" name="name"
-                placeholder="Digite o seu nome de usuário" required>
+                <input type="text" id="name" name="name" placeholder="Digite o seu nome de usuário" required>
             </div>
             <div class="form-group">
                 <label for="email">E-mail</label>
@@ -38,15 +36,16 @@
                 <input type="password" id="confirmPassword" name="confirmPassword" required>
             </div>
             <button type="submit">Cadastrar</button>
+            <!-- <p>Já possui conta?Clique <a style="color: #864E04; text-decoration: none;" href="/login">aqui</a>  para fazer login</p> -->
         </form>
         <div class="signup" style="margin-top: 50px;">
             <h2>Já possui conta?</h2>
             <p class="signup-info">Faça login com os dados inseridos durante seu cadastro.</p>
             <button class="signup-button">
-                <a style="color: #864E04; text-decoration: none;"
-                                                        href="/login">Log-in</a>
+                <a style="color: #864E04; text-decoration: none;" href="/login">Log-in</a>
             </button>
         </div>
     </div>
 </div>
-    <%- include ('partials/footer.ejs') %>
+
+<%- include('partials/footer.ejs') %>

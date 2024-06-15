@@ -7,7 +7,7 @@ const Demanda = connection.define('demandas', {
         allowNull: false
     },
     dataTermino: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false
     },
     tipoServico: {
