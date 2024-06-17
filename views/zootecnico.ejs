@@ -10,13 +10,21 @@
         </div>
     </div>
 
-
+<div class="div-infos-func">
     <!-- Gráfico de Pizza -->
-    <canvas id="graficoSuplementacao" width="200" height="200"></canvas>
-    <canvas id="graficoPasto" width="200" height="200"></canvas>
+    <div class="div-infos-func" style="justify-content:center; padding-left: 13%;">
+          <div class="col">
+           <p>Relação Suplementação:</p>
+            <canvas id="graficoSuplementacao" width="200" height="200"></canvas>
+          </div>
+          <div class="col">
+            <p>Relação Pasto:</p>
+            <canvas id="graficoPasto" width="200" height="200"></canvas>
+          </div>
+    </div>
+
 
     <!-- Tabela de Alertas -->
-    <div class="div-infos-func">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -50,10 +58,10 @@
                         </tr>
                     <% } %>
                 <% }) %>
-            </tbody>
-        </table>
-    </div>
-
+                </tbody>
+            </table>
+        </div>
+</div>  
     <%- include('partials/footer.ejs') %>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -92,7 +100,8 @@
                     responsive: true,
                     plugins: {
                         legend: {
-                            position: 'top'
+                            position: 'bottom',
+                            align: 'start'
                         },
                         tooltip: {
                             callbacks: {
@@ -138,7 +147,8 @@
                     responsive: true,
                     plugins: {
                         legend: {
-                            position: 'top'
+                            position: 'bottom',
+                            align: 'start'
                         },
                         tooltip: {
                             callbacks: {
