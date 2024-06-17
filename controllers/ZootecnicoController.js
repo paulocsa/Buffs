@@ -5,8 +5,9 @@ import Zootecnico from '../models/Zootecnico.js'
 
 router.get('/zootecnico', async (req, res) => {
     try {
-        const bufalos = await Bufalo.findAll(); // Buscar todos os búfalos cadastrados
-        const ultimoBufalo = await Bufalo.findOne({ order: [['id', 'DESC']] }); // Buscar último búfalo cadastrado
+        const bufalos = await Bufalo.findAll() // Buscar todos os búfalos cadastrados
+        const zootecnico = await Zootecnico.findAll() //buscar os dados zootecnicos
+        const ultimoBufalo = await Bufalo.findOne({ order: [['id', 'DESC']] }) // Buscar último búfalo cadastrado
 
         const ultimoBufaloId = ultimoBufalo ? ultimoBufalo.id : null
 
@@ -17,7 +18,7 @@ router.get('/zootecnico', async (req, res) => {
 
         // Renderizar o template 'zootecnico' passando todos os dados necessários
         res.render('zootecnico', {
-            Zootecnico,
+            zootecnico,
             bufalos,
             ultimoBufaloId,
             totalBufalos,

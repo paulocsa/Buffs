@@ -29,11 +29,13 @@
             <% bufalos.forEach(bufalo => { %>
                 <tr>
                     <td><%= bufalo.tag %></td>
-                    <td><%= bufalo.comprimentoCorporal %></td>
+                    <% }) %>
+                    <% zootecnico.forEach(zootecnico => { %>
+                    <td><%= zootec.comprimentoCorporal %></td>
                     <td><%= bufalo.circunferenciaCorporal %></td>
                     <td><%= bufalo.alturaCernelha %></td>
                     <td><%= bufalo.suplementacao %></td>
-                    <td><%= bufalo.tipoRacao %></td>
+                    <td><%= bufalo.tipoRacao %></td>  <!-- ta errado isso aq n sei como resolver ainda, o zootecnico.item n deu certo talvez seja algo no controller -->
                     <td><%= bufalo.tipoPastagem %></td>
                 </tr>
             <% }) %>

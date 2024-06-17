@@ -1,36 +1,35 @@
 import express from 'express'
 const router = express.Router()
 import Bufalo from '../models/Bufalo.js'
+import Zootecnico from '../models/Zootecnico.js'
 import { where } from 'sequelize'
+import Auth from "../middleware/Auth.js"
 
 // Rota para listar todos os búfalos
-router.get('/rebanhos', (req, res) => {
-res.render('rebanhos')
-})
-
-// Rota do controle sanitário
-router.get('/sanitario', (req, res) => {
-    res.render('sanitario')
-})
-
-// Rota do controle reproducao
-router.get('/reproducao', (req, res) => {
-    res.render('reproducao')
-})
-
-// Rota para exibir o formulário de criação de búfalo
-router.get('/cadastroBufalo', (req, res) => {
-    res.render('cadastroBufalo')
-})
+router.get('/rebanhos', Auth, (req, res) => {
+    Bufalo.findAll()
+        .then(bufalos => {
+            Zootecnico.findOne({ where: { /* Condições de busca, se necessário */ } })
+                .then(zootecnico => {
+                    res.render('rebanhos', { bufalos, zootecnico });
+                })
+                .catch(err => {
+                    req.flash('danger', 'Erro ao buscar dados do zootécnico.');
+                    res.render('rebanhos', { bufalos, zootecnico: null }); // Renderiza com zootecnico como null ou outro valor padrão
+                });
+        })
+        .catch(err => {
+            req.flash('danger', 'Erro ao listar búfalos.');
+            res.redirect('/');
+        });
+});
 
 // Rota para criar um novo búfalo
 router.post('/createBufalo', (req, res) => {
     const { id, tag, valorArroba, nome, idade, peso, raca, sexo, dataNascimento } = req.body
 
-    // Verificando se o búfalo já está cadastrado
     Bufalo.findOne({ where: { tag } }).then(bufalo => {
-        if (bufalo == undefined) {
-            // Cadastro
+        if (!bufalo) {
             Bufalo.create({
                 tag,
                 valorArroba,
@@ -42,7 +41,7 @@ router.post('/createBufalo', (req, res) => {
                 dataNascimento
             }).then(() => {
                 req.flash('success', 'Búfalo cadastrado com sucesso!')
-                return res.redirect('/rebanho')
+                return res.redirect('/rebanhos')
             }).catch(err => {
                 req.flash('danger', 'Erro ao cadastrar búfalo.')
                 return res.redirect('/cadastroBufalo')
@@ -54,24 +53,24 @@ router.post('/createBufalo', (req, res) => {
     }).catch(err => {
         req.flash('danger', 'Erro ao verificar búfalo.')
         return res.redirect('/cadastroBufalo')
-    })
-})
+    });
+});
 
 // Rota para exibir o formulário de edição de búfalo
 router.get('/editBufalo/:id', (req, res) => {
-    const { id } = req.params
+    const { id } = req.params;
     Bufalo.findByPk(id).then(bufalo => {
         if (bufalo) {
             res.render('editBufalo', { bufalo })
         } else {
             req.flash('danger', 'Búfalo não encontrado.')
-            res.redirect('/rebanho')
+            res.redirect('/rebanhos')
         }
     }).catch(err => {
         req.flash('danger', 'Erro ao buscar búfalo.')
-        res.redirect('/rebanho')
-    })
-})
+        res.redirect('/rebanhos')
+    });
+});
 
 // Rota para atualizar um búfalo
 router.post('/updateBufalo/:id', (req, res) => {
@@ -92,34 +91,34 @@ router.post('/updateBufalo/:id', (req, res) => {
     }).then(result => {
         if (result[0] > 0) {
             req.flash('success', 'Búfalo atualizado com sucesso!')
-            res.redirect('/rebanho')
+            res.redirect('/rebanhos')
         } else {
             req.flash('danger', 'Erro ao atualizar búfalo.')
-            res.redirect('/editBufalo/' + id)
+            res.redirect(`/editBufalo/${id}`)
         }
     }).catch(err => {
         req.flash('danger', 'Erro ao atualizar búfalo.')
-        res.redirect('/editBufalo/' + id)
-    })
-})
+        res.redirect(`/editBufalo/${id}`)
+    });
+});
 
 // Rota para deletar um búfalo
 router.post('/deleteBufalo/:id', (req, res) => {
-    const { id } = req.params
+    const { id } = req.params;
 
     Bufalo.destroy({
         where: { id }
     }).then(result => {
         if (result > 0) {
             req.flash('success', 'Búfalo deletado com sucesso!')
-            res.redirect('/rebanho')
+            res.redirect('/rebanhos')
         } else {
             req.flash('danger', 'Erro ao deletar búfalo.')
-            res.redirect('/rebanho')
+            res.redirect('/rebanhos')
         }
     }).catch(err => {
         req.flash('danger', 'Erro ao deletar búfalo.')
-        res.redirect('/rebanho')
+        res.redirect('/rebanhos')
     })
 })
 
