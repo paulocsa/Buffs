@@ -8,11 +8,10 @@ import Auth from '../middleware/Auth.js'
 router.get('/demandas', Auth, (req, res) => {
     const funcionariosPromise = Funcionario.findAll()
     Promise.all([funcionariosPromise])
-        .then(([funcionarios, demandas]) => {
+        .then(([funcionarios]) => {
             // Renderizar o template 'demandas' passando todos os dados necessários
             res.render('demandas', {
-                funcionarios: funcionarios,
-                demandas:demandas
+                funcionarios: funcionarios
             })
         })
 })

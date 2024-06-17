@@ -1,3 +1,4 @@
+
 import express from 'express'
 const router = express.Router()
 import Bufalo from '../models/Bufalo.js'
@@ -5,8 +6,9 @@ import Zootecnico from '../models/Zootecnico.js'
 
 router.get('/zootecnico', async (req, res) => {
     try {
-        const bufalos = await Zootecnico.findAll(); // Buscar todos os búfalos cadastrados
-        const ultimoBufalo = await Zootecnico.findOne({ order: [['id', 'DESC']] }); // Buscar último búfalo cadastrado
+        const bufalos = await Bufalo.findAll() // Buscar todos os búfalos cadastrados
+        const zootecnico = await Zootecnico.findAll() //buscar os dados zootecnicos
+        const ultimoBufalo = await Bufalo.findOne({ order: [['id', 'DESC']] }) // Buscar último búfalo cadastrado
 
         const ultimoBufaloId = ultimoBufalo ? ultimoBufalo.id : null
 
@@ -14,6 +16,11 @@ router.get('/zootecnico', async (req, res) => {
         const totalBufalos = bufalos.length;
         const bufalosSuplementacao = bufalos.filter(bufalo => bufalo.status === 'suplementacao').length
         const bufalosObservacao = bufalos.filter(bufalo => bufalo.status === 'observacao').length
+
+        bufalos.forEach(bufalo => {
+            bufalo.zootecnico = zootecnico.filter(z => z.tag === bufalo.tag);
+        });
+
 
         // Renderizar o template 'zootecnico' passando todos os dados necessários
         res.render('zootecnico', {
