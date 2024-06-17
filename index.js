@@ -8,7 +8,9 @@ import connection from './config/sequelize-config.js'
 import UsersController from './controllers/UsersController.js'
 import BufalosController from './controllers/BufalosController.js'
 import ZootecnicoController from './controllers/ZootecnicoController.js'
-import FuncionariosController from './controllers/FuncionariosController.js'
+import ReproducaoController from './controllers/ReproducaoController.js'
+import SanitarioController from './controllers/SanitarioController.js'
+import FuncionariosController from './controllers/FuncionariosController.js' 
 import DemandasController from './controllers/DemandasController.js'
 import Auth from './middleware/Auth.js'
 import Funcionario from './models/Funcionario.js'
@@ -49,7 +51,8 @@ app.use('/', BufalosController)
 app.use('/', ZootecnicoController)
 app.use('/', FuncionariosController)
 app.use('/', DemandasController)
-
+app.use('/', ReproducaoController)
+app.use('/', SanitarioController)
 
 
 // Rota Inicial com Autenticação

@@ -7,7 +7,13 @@ import Auth from '../middleware/Auth.js'
 import { where } from 'sequelize'
 
 router.get('/demandas', Auth, (req, res) => {
-    const funcionariosPromise = Funcionario.findAll()
+
+    const funcionariosPromise = Funcionario.findAll({
+        include: {
+            model: Demanda,
+            attributes: ["dataInicio", "dataTermino", "tipoServico"]
+        }
+    }) //criar findAll p demanda
     Promise.all([funcionariosPromise])
         .then(([funcionarios]) => {
             // Renderizar o template 'demandas' passando todos os dados necessários
@@ -19,9 +25,10 @@ router.get('/demandas', Auth, (req, res) => {
 
 //criar nova demanda
 router.post('/createDemanda', (req, res) =>{
-    const {dataInicio, dataTermino, tipoServico} = req.body
+    const {dataInicio, dataTermino, tipoServico, funcionarioId} = req.body
 
     Demanda.create({
+        funcionarioId,
         dataInicio,
         dataTermino,
         tipoServico

@@ -2,6 +2,11 @@ import Sequelize from 'sequelize'
 import connection from '../config/sequelize-config.js'
 
 const Funcionario = connection.define('funcionarios', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     nome: {
         type: Sequelize.STRING,
         allowNull: false
