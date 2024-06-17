@@ -15,6 +15,7 @@ import DemandasController from './controllers/DemandasController.js'
 import Auth from './middleware/Auth.js'
 import Funcionario from './models/Funcionario.js'
 import Bufalo from './models/Bufalo.js'
+import Demanda from './models/Demanda.js'
 import Zootecnico from './models/Zootecnico.js'
 
 const app = express()
@@ -65,9 +66,11 @@ app.get('/', Auth, (req, res) => {
     const ultimoBufaloPromise = Bufalo.findOne({ order: [['id', 'DESC']] }); //Busca o ultimo Bufalo
     const user = req.session.user //Defino o nome do usuario que iniciou a sessão, de acordo com seu cadastro
 
+    const demandasPromise = Demanda.findAll();
+
     // Utiliza Promisse para executar as operações em paralelo
-    Promise.all([funcionariosPromise, ultimoFuncionarioPromise, bufalosPromise, ultimoBufaloPromise])
-        .then(([funcionarios, ultimoFuncionario, bufalos, ultimoBufalo]) => {
+    Promise.all([funcionariosPromise, ultimoFuncionarioPromise, bufalosPromise, ultimoBufaloPromise, demandasPromise])
+        .then(([funcionarios, ultimoFuncionario, bufalos, ultimoBufalo, demandas]) => {
             const ultimoId = ultimoFuncionario ? ultimoFuncionario.id : null;
             const ultimoBufaloId = ultimoBufalo ? ultimoBufalo.id : null;
 
@@ -77,8 +80,8 @@ app.get('/', Auth, (req, res) => {
                 ultimoId: ultimoId,
                 bufalos: bufalos,
                 ultimoBufaloId: ultimoBufaloId,
-                user: user.name
-
+                user: user.name,
+                demandas: demandas
             });
         })
         .catch(error => {
