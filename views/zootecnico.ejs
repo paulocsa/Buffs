@@ -1,3 +1,4 @@
+
 <%- include('partials/header.ejs') %>
 <%- include('partials/nav.ejs') %>
 <%- include('partials/sidebar.ejs') %>
@@ -12,34 +13,42 @@
     <canvas id="graficoZootec" width="20" height="20"></canvas>
 
     <!-- Tabela de Alertas -->
-    <h3>Alertas</h3>
-    <table class="table">
+    <div class="div-infos-func">
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>TAG</th>
-                <th>Comprimento Corporal</th>
-                <th>Circunferência Corporal</th>
-                <th>Altura da Cernelha</th>
-                <th>Suplementação</th>
-                <th>Tipo de Ração</th>
-                <th>Tipo de Pastagem</th>
+                <th style="background-color: #FFCF78;">TAG</th>
+                <th style="background-color: #FFCF78;">Comprimento Corporal</th>
+                <th style="background-color: #FFCF78;">Circunferência Corporal</th>
+                <th style="background-color: #FFCF78;">Altura da Cernelha</th>
+                <th style="background-color: #FFCF78;">Suplementação</th>
+                <th style="background-color: #FFCF78;">ipo de Ração</th>
+                <th style="background-color: #FFCF78;">Tipo de Pastagem</th>
             </tr>
         </thead>
         <tbody>
             <% bufalos.forEach(bufalo => { %>
-                <tr>
-                    <td><%= bufalo.tag %></td>
+                <% if (Array.isArray(bufalo.zootecnico) && bufalo.zootecnico.length > 0) { %>
+                    <% bufalo.zootecnico.forEach(zootecnico => { %>
+                        <tr>
+                            <td><%= bufalo.tag %></td>
+                            <td><%= zootecnico.comprimentoCorporal %></td>
+                            <td><%= zootecnico.circunferenciaCorporal %></td>
+                            <td><%= zootecnico.alturaCernelha %></td>
+                            <td><%= zootecnico.suplementacao %></td>
+                            <td><%= zootecnico.tipoRacao %></td>
+                            <td><%= zootecnico.tipoPastagem %></td>
+                        </tr>
                     <% }) %>
-                    <% zootecnico.forEach(zootecnico => { %>
-                    <td><%= zootec.comprimentoCorporal %></td>
-                    <td><%= bufalo.circunferenciaCorporal %></td>
-                    <td><%= bufalo.alturaCernelha %></td>
-                    <td><%= bufalo.suplementacao %></td>
-                    <td><%= bufalo.tipoRacao %></td>  <!-- ta errado isso aq n sei como resolver ainda, o zootecnico.item n deu certo talvez seja algo no controller -->
-                    <td><%= bufalo.tipoPastagem %></td>
-                </tr>
+                <% } else { %>
+                    <tr>
+                        <td><%= bufalo.tag %></td>
+                        <td colspan="6">Nenhum dado zootécnico disponível</td>
+                    </tr>
+                <% } %>
             <% }) %>
         </tbody>
+        
     </table>
 </div>
 

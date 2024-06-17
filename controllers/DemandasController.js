@@ -4,7 +4,6 @@ import Demanda from '../models/Demanda.js'
 import Funcionario from '../models/Funcionario.js'
 import Auth from '../middleware/Auth.js'
 
-import { where } from 'sequelize'
 
 router.get('/demandas', Auth, (req, res) => {
     const funcionariosPromise = Funcionario.findAll()

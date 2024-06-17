@@ -1,3 +1,4 @@
+
 import express from 'express'
 const router = express.Router()
 import Bufalo from '../models/Bufalo.js'
@@ -15,6 +16,11 @@ router.get('/zootecnico', async (req, res) => {
         const totalBufalos = bufalos.length;
         const bufalosSuplementacao = bufalos.filter(bufalo => bufalo.status === 'suplementacao').length
         const bufalosObservacao = bufalos.filter(bufalo => bufalo.status === 'observacao').length
+
+        bufalos.forEach(bufalo => {
+            bufalo.zootecnico = zootecnico.filter(z => z.tag === bufalo.tag);
+        });
+
 
         // Renderizar o template 'zootecnico' passando todos os dados necessários
         res.render('zootecnico', {
