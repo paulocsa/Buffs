@@ -46,8 +46,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const bufalosSuplementacao = <%= bufalosSuplementacao %>
-        const bufalosObservacao = <%= bufalosObservacao %>
+        const bufalosSuplementacao = `<%= bufalosSuplementacao %>`
+        const bufalosObservacao = `<%= bufalosObservacao %>`
 
         // Criação do gráfico de pizza
         const ctx = document.getElementById('graficoZootec').getContext('2d')
