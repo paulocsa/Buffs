@@ -2,16 +2,17 @@ import express from 'express'
 const router = express.Router()
 import Demanda from '../models/Demanda.js'
 import Funcionario from '../models/Funcionario.js'
+import Auth from '../middleware/Auth.js'
 
-import { where } from 'sequelize'
 
-router.get('/demandas', (req, res) => {
+router.get('/demandas', Auth, (req, res) => {
     const funcionariosPromise = Funcionario.findAll()
     Promise.all([funcionariosPromise])
-        .then(([funcionarios]) => {
+        .then(([funcionarios, demandas]) => {
             // Renderizar o template 'demandas' passando todos os dados necessários
             res.render('demandas', {
-                funcionarios: funcionarios
+                funcionarios: funcionarios,
+                demandas:demandas
             })
         })
 })

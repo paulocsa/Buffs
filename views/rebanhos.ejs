@@ -1,7 +1,308 @@
 <%- include('partials/header.ejs') %>
-    <%- include('partials/nav.ejs') %>
-        <%- include('partials/sidebar.ejs') %>
+<%- include('partials/nav.ejs') %>
+<%- include('partials/sidebar.ejs') %>
+<div style="background-color: #FEF5E4;display: flex; width: 100%;flex-direction: column;flex-direction: column; justify-content: flex-start; ">
+    <div style="background-color: #F5F5F5; width: 100%;height: 70px; margin-bottom: 10px;width: 100%;">
+        <p style="margin-top: 20px; margin-left: 20px;">Controle de Rebanhos</p>
+        <div style="justify-content: right; display: flex;margin-left: auto;margin-top: -40px;">
+            <button class="btn btn-dark" data-toggle="modal" data-target="#createBufaloModal" style="margin-right: 10px; background-color: #2D220A;">Adicionar Bubalino</button>
+            <button class="btn btn-dark" style="background-color: #2D220A;">Exportar dados</button>
+        </div>
+    </div>
+    <div style="background-color: #FFF; height: 150px; margin-bottom: 10px;width: 95%; border-radius: 8px; margin-left: 30px; padding-top: 10px; padding-left: 20px;">
+        <p>Parâmetros de pesquisa</p>
+        <form class="d-flex" id="searchForm">
+            <div class="form-group col-md-1">
+                <label for="tag">Tag</label>
+                <input type="text" class="form-control" id="tag" placeholder="#">
+            </div>
+            <div class="form-group col-md-1">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" id="nome">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="data-nascimento">Data de Nascimento</label>
+                <input type="date" class="form-control" id="data-nascimento" placeholder="__/__/____">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="peso">Peso</label>
+                <input type="text" class="form-control" id="peso" placeholder="kg">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="raca">Raça</label>
+                <input type="text" class="form-control" id="raca">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="sexo">Sexo</label>
+                <input type="text" class="form-control" id="sexo">
+            </div>
+            <div class="form-group col-1">
+                <button type="submit" class="btn btn-dark" style="background-color: #2D220A;">Consultar</button>
+            </div>
+        </form>
+    </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#searchForm").submit(function (event) {
+                event.preventDefault(); // Impede o envio do formulário
 
+                var tag = $("#tag").val().toLowerCase();
+                var nome = $("#nome").val().toLowerCase();
+                var dataNascimento = $("#data-nascimento").val();
+                var peso = $("#peso").val().toLowerCase();
+                var raca = $("#raca").val().toLowerCase();
+                var sexo = $("#sexo").val().toLowerCase();
 
-<%- include ('partials/footer.ejs') %>
+                $("#bufalosTable tbody tr").filter(function () {
+                    var rowText = $(this).text().toLowerCase();
+                    var matchTag = tag === "" || rowText.indexOf(tag) > -1;
+                    var matchNome = nome === "" || rowText.indexOf(nome) > -1;
+                    var matchDataNascimento = dataNascimento === "" || rowText.indexOf(dataNascimento) > -1;
+                    var matchPeso = peso === "" || rowText.indexOf(peso) > -1;
+                    var matchRaca = raca === "" || rowText.indexOf(raca) > -1;
+                    var matchSexo = sexo === "" || rowText.indexOf(sexo) > -1;
+
+                    $(this).toggle(matchTag && matchNome && matchDataNascimento && matchPeso && matchRaca && matchSexo);
+                });
+            });
+        });
+    </script>
+   <div class="div-infos-func">
+    <table class="table table-striped" id="bufalosTable">
+            <thead>
+                <tr>
+                    <th style="background-color: #FFCF78;">Nome Búfala</th>
+                    <th style="background-color: #FFCF78;">Tag</th>
+                    <th style="background-color: #FFCF78;">Raça</th>
+                    <th style="background-color: #FFCF78;">Sexo</th>
+                    <th style="background-color: #FFCF78;">Data de nascimento</th>
+                    <th style="background-color: #FFCF78;">Peso</th>
+                    <th style="background-color: #FFCF78;">Ver mais</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% bufalos.forEach(bufalo => { %>
+                <tr>
+                    <td><%= bufalo.nome %></td>
+                    <td><%= bufalo.tag %></td>
+                    <td><%= bufalo.raca %></td>
+                    <td><%= bufalo.sexo %></td>
+                    <td><%= new Date(bufalo.dataNascimento).toLocaleDateString() %></td>
+                    <td><%= bufalo.peso %>kg</td>
+                    <td>
+                        <button class="btn btn-link" data-toggle="modal" data-target="#viewBufaloModal<%= bufalo.id %>"><img src="/add.icondepois" alt="Ver mais" width="24"></button>
+                    </td>
+                </tr>
+
+                <!-- Modal Ver Mais -->
+                <div class="modal fade" id="viewBufaloModal<%= bufalo.id %>" tabindex="-1" role="dialog" aria-labelledby="viewBufaloModalLabel<%= bufalo.id %>" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="viewBufaloModalLabel<%= bufalo.id %>">Ficha do Búfalo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Nome:</strong> <%= bufalo.nome %></p>
+                                <p><strong>Tag:</strong> <%= bufalo.tag %></p>
+                                <p><strong>Raça:</strong> <%= bufalo.raca %></p>
+                                <p><strong>Sexo:</strong> <%= bufalo.sexo %></p>
+                                <p><strong>Data de Nascimento:</strong> <%= new Date(bufalo.dataNascimento).toLocaleDateString() %></p>
+                                <p><strong>Peso:</strong> <%= bufalo.peso %>kg</p>
+                                <p><strong>Valor Arroba:</strong> <%= bufalo.valorArroba %></p>
+                                <p><strong>Idade:</strong> <%= bufalo.idade %></p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editBufaloModal<%= bufalo.id %>">Editar</button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteBufaloModal<%= bufalo.id %>">Excluir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Editar -->
+                <div class="modal fade" id="editBufaloModal<%= bufalo.id %>" tabindex="-1" role="dialog" aria-labelledby="editBufaloModalLabel<%= bufalo.id %>" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editBufaloModalLabel<%= bufalo.id %>">Editar Búfalo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/updateBufalo/<%= bufalo.id %>" method="POST">
+                                    <div class="form-group">
+                                        <label for="tag<%= bufalo.id %>">Tag</label>
+                                        <input type="text" class="form-control" id="tag<%= bufalo.id %>" name="tag" value="<%= bufalo.tag %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="valorArroba<%= bufalo.id %>">Valor Arroba</label>
+                                        <input type="text" class="form-control" id="valorArroba<%= bufalo.id %>" name="valorArroba" value="<%= bufalo.valorArroba %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nome<%= bufalo.id %>">Nome</label>
+                                        <input type="text" class="form-control" id="nome<%= bufalo.id %>" name="nome" value="<%= bufalo.nome %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="idade<%= bufalo.id %>">Idade</label>
+                                        <input type="text" class="form-control" id="idade<%= bufalo.id %>" name="idade" value="<%= bufalo.idade %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="peso<%= bufalo.id %>">Peso</label>
+                                        <input type="text" class="form-control" id="peso<%= bufalo.id %>" name="peso" value="<%= bufalo.peso %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="raca<%= bufalo.id %>">Raça</label>
+                                        <input type="text" class="form-control" id="raca<%= bufalo.id %>" name="raca" value="<%= bufalo.raca %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sexo<%= bufalo.id %>">Sexo</label>
+                                        <input type="text" class="form-control" id="sexo<%= bufalo.id %>" name="sexo" value="<%= bufalo.sexo %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dataNascimento<%= bufalo.id %>">Data de Nascimento</label>
+                                        <input type="date" class="form-control" id="dataNascimento<%= bufalo.id %>" name="dataNascimento" value="<%= bufalo.dataNascimento.toLocaleDateString().split('T')[0] %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="comprimentoCorporal<%= bufalo.id %>">Comprimento Corporal</label>
+                                        <input type="text" class="form-control" id="comprimentoCorporal<%= bufalo.id %>" name="comprimentoCorporal" value="<%= bufalo.comprimentoCorporal %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="circunferenciaCorporal<%= bufalo.id %>">Circunferência Corporal</label>
+                                        <input type="text" class="form-control" id="circunferenciaCorporal<%= bufalo.id %>" name="circunferenciaCorporal" value="<%= bufalo.circunferenciaCorporal %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="alturaCernelha<%= bufalo.id %>">Altura da Cernelha</label>
+                                        <input type="text" class="form-control" id="alturaCernelha<%= bufalo.id %>" name="alturaCernelha" value="<%= bufalo.alturaCernelha %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="suplementacao<%= bufalo.id %>">Tipo de Suplementos</label>
+                                        <input type="text" class="form-control" id="suplementacao<%= bufalo.id %>" name="suplementacao" value="<%= bufalo.suplementacao %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tipoRacao<%= bufalo.id %>">Tipo de Ração</label>
+                                        <input type="text" class="form-control" id="tipoRacao<%= bufalo.id %>" name="tipoRacao" value="<%= bufalo.tipoRacao %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tipoPastagem<%= bufalo.id %>">Tipo de Pastagem</label>
+                                        <input type="text" class="form-control" id="tipoPastagem<%= bufalo.id %>" name="tipoPastagem" value="<%= bufalo.tipoPastagem %>">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Excluir -->
+                <div class="modal fade" id="deleteBufaloModal<%= bufalo.id %>" tabindex="-1" role="dialog" aria-labelledby="deleteBufaloModalLabel<%= bufalo.id %>" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteBufaloModalLabel<%= bufalo.id %>">Excluir Búfalo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Tem certeza de que deseja excluir o búfalo <strong><%= bufalo.nome %></strong>?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <form action="/deleteBufalo/<%= bufalo.id %>" method="POST">
+                                    <button type="submit" class="btn btn-danger">Excluir</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal Adicionar -->
+<div class="modal fade" id="createBufaloModal" tabindex="-1" role="dialog" aria-labelledby="createBufaloModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createBufaloModalLabel">Adicionar Búfalo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/createBufalo" method="POST">
+                    <div class="form-group">
+                        <label for="tag">Tag</label>
+                        <input type="text" class="form-control" id="tag" name="tag">
+                    </div>
+                    <div class="form-group">
+                        <label for="valorArroba">Valor Arroba</label>
+                        <input type="text" class="form-control" id="valorArroba" name="valorArroba">
+                    </div>
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="idade">Idade</label>
+                        <input type="text" class="form-control" id="idade" name="idade">
+                    </div>
+                    <div class="form-group">
+                        <label for="peso">Peso</label>
+                        <input type="text" class="form-control" id="peso" name="peso">
+                    </div>
+                    <div class="form-group">
+                        <label for="raca">Raça</label>
+                        <input type="text" class="form-control" id="raca" name="raca">
+                    </div>
+                    <div class="form-group">
+                        <label for="sexo">Sexo</label>
+                        <input type="text" class="form-control" id="sexo" name="sexo">
+                    </div>
+                    <div class="form-group">
+                        <label for="dataNascimento">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="dataNascimento" name="dataNascimento">
+                    </div>
+                    <div class="form-group">
+                        <label for="comprimentoCorporal">Comprimento Corporal</label>
+                        <input type="text" class="form-control" id="comprimentoCorporal" name="comprimentoCorporal">
+                    </div>
+                    <div class="form-group">
+                        <label for="circunferenciaCorporal">Circunferência Corporal</label>
+                        <input type="text" class="form-control" id="circunferenciaCorporal" name="circunferenciaCorporal">
+                    </div>
+                    <div class="form-group">
+                        <label for="alturaCernelha">Altura da Cernelha</label>
+                        <input type="text" class="form-control" id="alturaCernelha" name="alturaCernelha">
+                    </div>
+                    <div class="form-group">
+                        <label for="suplementacao">Tipo de Suplementos</label>
+                        <input type="text" class="form-control" id="suplementacao" name="suplementacao">
+                    </div>
+                    <div class="form-group">
+                        <label for="tipoRacao">Tipo de Ração</label>
+                        <input type="text" class="form-control" id="tipoRacao" name="tipoRacao">
+                    </div>
+                    <div class="form-group">
+                        <label for="tipoPastagem">Tipo de Pastagem</label>
+                        <input type="text" class="form-control" id="tipoPastagem" name="tipoPastagem">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer.ejs') %>

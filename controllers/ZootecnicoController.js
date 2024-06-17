@@ -17,7 +17,7 @@ router.get('/zootecnico', async (req, res) => {
 
         // Renderizar o template 'zootecnico' passando todos os dados necessários
         res.render('zootecnico', {
-            Zootecnico,
+            zootecnico,
             bufalos,
             ultimoBufaloId,
             totalBufalos,
