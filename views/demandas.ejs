@@ -1,100 +1,118 @@
 <%- include('partials/header.ejs') %>
-<%- include('partials/nav.ejs') %>
-<%- include('partials/sidebar.ejs') %>
+    <%- include('partials/nav.ejs') %>
+        <%- include('partials/sidebar.ejs') %>
 
-   <div style="background-color: #FEF5E4;display: flex; width: 100%;flex-direction: column;flex-direction: column; justify-content: flex-start; ">
-    <div style="background-color: #F5F5F5; width: 100%;height: 70px; margin-bottom: 10px;width: 100%;">
-        <p style="margin-top: 20px; margin-left: 20px;">Demandas</p>
-        <button type="button" class="btn btn-secondary"  data-toggle="modal" data-target="#addDemandaModal"
-            style="justify-content: right; display: flex;margin-left: auto; margin-right: 10px;margin-top: -40px;background-color: #2D220A;">
-            Adicionar Demandas
-        </button>
-    </div>
-    <div class="div-infos-func">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th style="background-color: #FFCF78;">Nome</th>
-                <th style="background-color: #FFCF78;">Cargo</th>
-                <th style="background-color: #FFCF78;">Tipo de Serviço</th>
-                <th style="background-color: #FFCF78;">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% funcionarios.forEach(funcionario => { %>
-                <% if (funcionario.demandas && funcionario.demandas.length > 0) { %>
-                    <% funcionario.demandas.forEach(demanda => { %>
-                        <tr>
-                            <td><%= funcionario.nome %></td>
-                            <td><%= funcionario.cargo %></td>
-                            <td><%= demanda.tipoServico %></td>
-                            <td>
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editDemandaModal<%= demanda.id %>">
-                                    Editar
-                                </button>
-                                <form action="/deleteDemanda/<%= demanda.id %>" method="POST" style="display:inline;">
-                                    <button type="submit" class="btn btn-danger">Deletar</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <% }); %>
-                <% } else { %>
-                    <tr>
-                        <td><%= funcionario.nome %></td>
-                        <td><%= funcionario.cargo %></td>
-                        <td>Sem demandas</td>
-                        <td>
-                        </td>
-                    </tr>
-                <% } %>
-            <% }); %>
-        </tbody>
-    </table>
-</div>
-</div>
-
-
-           <!-- Modal Adicionar Demanda -->
-<div class="modal fade" id="addDemandaModal" tabindex="-1" role="dialog" aria-labelledby="addDemandaModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="/createDemanda" method="POST">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addDemandaModalLabel">Cadastrar Demanda</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+            <div
+                style="background-color: #FEF5E4;display: flex; width: 100%;flex-direction: column;flex-direction: column; justify-content: flex-start; ">
+                <div style="background-color: #F5F5F5; width: 100%;height: 70px; margin-bottom: 10px;width: 100%;">
+                    <p style="margin-top: 20px; margin-left: 20px;">Demandas</p>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addDemandaModal"
+                        style="justify-content: right; display: flex;margin-left: auto; margin-right: 10px;margin-top: -40px;background-color: #2D220A;">
+                        Adicionar Demandas
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="funcionarioId">Nome do Funcionário</label>
-                        <select class="form-control" id="funcionarioId" name="funcionarioId" required>
-                            <% funcionarios.forEach(funcionario => { %>
-                                <option value="<%= funcionario.id %>"><%= funcionario.nome %></option>
-                            <% }); %>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="dataInicio">Data Início</label>
-                        <input type="date" class="form-control" id="dataInicio" name="dataInicio" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="dataTermino">Data Término</label>
-                        <input type="date" class="form-control" id="dataTermino" name="dataTermino" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="tipoServico">Tipo de Serviço</label>
-                        <input type="text" class="form-control" id="tipoServico" name="tipoServico" required>
+                <div class="div-infos-func">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th style="background-color: #FFCF78;">Nome</th>
+                                <th style="background-color: #FFCF78;">Cargo</th>
+                                <th style="background-color: #FFCF78;">Tipo de Serviço</th>
+                                <th style="background-color: #FFCF78;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% funcionarios.forEach(funcionario=> { %>
+                                <% if (funcionario.demandas && funcionario.demandas.length> 0) { %>
+                                    <% funcionario.demandas.forEach(demanda=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= funcionario.nome %>
+                                            </td>
+                                            <td>
+                                                <%= funcionario.cargo %>
+                                            </td>
+                                            <td>
+                                                <%= demanda.tipoServico %>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-warning" data-toggle="modal"
+                                                    data-target="#editDemandaModal<%= demanda.id %>">
+                                                    Editar
+                                                </button>
+                                                <form action="/deleteDemanda/<%= demanda.id %>" method="POST"
+                                                    style="display:inline;">
+                                                    <button type="submit" class="btn btn-danger">Deletar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                            <% } else { %>
+                                                <tr>
+                                                    <td>
+                                                        <%= funcionario.nome %>
+                                                    </td>
+                                                    <td>
+                                                        <%= funcionario.cargo %>
+                                                    </td>
+                                                    <td>Sem demandas</td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                                    <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- Modal Adicionar Demanda -->
+            <div class="modal fade" id="addDemandaModal" tabindex="-1" role="dialog"
+                aria-labelledby="addDemandaModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="/createDemanda" method="POST">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addDemandaModalLabel">Cadastrar Demanda</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="funcionarioId">Nome do Funcionário</label>
+                                    <select class="form-control" id="funcionarioId" name="funcionarioId" required>
+                                        <% funcionarios.forEach(funcionario=> { %>
+                                            <option value="<%= funcionario.id %>">
+                                                <%= funcionario.nome %>
+                                            </option>
+                                            <% }); %>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dataInicio">Data Início</label>
+                                    <input type="date" class="form-control" id="dataInicio" name="dataInicio" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dataTermino">Data Término</label>
+                                    <input type="date" class="form-control" id="dataTermino" name="dataTermino"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tipoServico">Tipo de Serviço</label>
+                                    <input type="text" class="form-control" id="tipoServico" name="tipoServico"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+            </div>
 
 
             <!-- Formulário de criação de demandas -->

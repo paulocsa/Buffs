@@ -1,8 +1,8 @@
-
 import express from 'express'
 const router = express.Router()
 import Bufalo from '../models/Bufalo.js'
 import Zootecnico from '../models/Zootecnico.js'
+import { where } from 'sequelize'
 
 router.get('/zootecnico', async (req, res) => {
     try {
@@ -14,22 +14,70 @@ router.get('/zootecnico', async (req, res) => {
 
         // Contagem de búfalos em cada categoria
         const totalBufalos = bufalos.length;
-        const bufalosSuplementacao = bufalos.filter(bufalo => bufalo.status === 'suplementacao').length
-        const bufalosObservacao = bufalos.filter(bufalo => bufalo.status === 'observacao').length
+        const suplementacaoMineral = await Zootecnico.count({
+            where: {
+                suplementacao: "Suplemento Mineral",
+            }
+        })
+        const suplementacaoProteico = await Zootecnico.count({
+            where: {
+                suplementacao: "Suplemento Proteico"
+            }
+        })
+        const suplementacaoEnergetico = await Zootecnico.count({
+            where: {
+                suplementacao: "Suplemento Energético"
+            }
+        })
+        const suplementacaoVitaminico = await Zootecnico.count({
+            where: {
+                suplementacao: "Suplemento Vitamínico"
+            }
+        })
+        const capimElefante = await Zootecnico.count({
+            where: {
+                tipoPastagem: "Capim Elefante"
+            }
+        })
+        const capimTanzania = await Zootecnico.count({
+            where: {
+                tipoPastagem: "Capim Tanzânia"
+            }
+        })
+        const capimMombaca = await Zootecnico.count({
+            where: {
+                tipoPastagem: "Capim Mombaça"
+            }
+        })
+        const capimCoastCross = await Zootecnico.count({
+            where: {
+                tipoPastagem: "Capim Coast Cross"
+            }
+        })
+        
+
 
         bufalos.forEach(bufalo => {
             bufalo.zootecnico = zootecnico.filter(z => z.tag === bufalo.tag);
         });
 
+ 
 
-        // Renderizar o template 'zootecnico' passando todos os dados necessários
+       // Renderizar o template 'zootecnico' passando todos os dados necessários
         res.render('zootecnico', {
             zootecnico,
             bufalos,
             ultimoBufaloId,
             totalBufalos,
-            bufalosSuplementacao,
-            bufalosObservacao
+            suplementacaoMineral,
+            suplementacaoProteico,
+            suplementacaoEnergetico,
+            suplementacaoVitaminico,
+            capimElefante,
+            capimTanzania,
+            capimMombaca,
+            capimCoastCross
+            
         })
     } catch (error) {
         console.error('Erro ao buscar os dados:', error)

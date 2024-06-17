@@ -23,8 +23,8 @@ router.get('/demandas', Auth, (req, res) => {
 })
 
 //criar nova demanda
-router.post('/createDemanda', (req, res) =>{
-    const {dataInicio, dataTermino, tipoServico, funcionarioId} = req.body
+router.post('/createDemanda', (req, res) => {
+    const { dataInicio, dataTermino, tipoServico, funcionarioId } = req.body
 
     Demanda.create({
         funcionarioId,
@@ -57,16 +57,16 @@ router.get('/editDemanda/:id', (req, res) => {
 })
 
 //rota para atualizar uma demanda
-router.post('//updateDemanda/:id', (req, res) =>{
+router.post('//updateDemanda/:id', (req, res) => {
     const { id } = req.params
-    const {dataInicio, dataTermino, tipoServico} = req.body
+    const { dataInicio, dataTermino, tipoServico } = req.body
 
     Demanda.update({
         dataInicio,
         dataTermino,
         tipoServico
     }, {
-        where : { id }
+        where: { id }
     }).then(result => {
         if (result[0] > 0) {
             req.flash('success', 'Demanda atualizada com sucesso!')

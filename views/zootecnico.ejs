@@ -1,4 +1,3 @@
-
 <%- include('partials/header.ejs') %>
 <%- include('partials/nav.ejs') %>
 <%- include('partials/sidebar.ejs') %>
@@ -10,99 +9,152 @@
     </button>
 
     <!-- Gráfico de Pizza -->
-    <canvas id="graficoZootec" width="20" height="20"></canvas>
+    <canvas id="graficoSuplementacao" width="200" height="200"></canvas>
+    <canvas id="graficoPasto" width="200" height="200"></canvas>
 
     <!-- Tabela de Alertas -->
     <div class="div-infos-func">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th style="background-color: #FFCF78;">TAG</th>
-                <th style="background-color: #FFCF78;">Comprimento Corporal</th>
-                <th style="background-color: #FFCF78;">Circunferência Corporal</th>
-                <th style="background-color: #FFCF78;">Altura da Cernelha</th>
-                <th style="background-color: #FFCF78;">Suplementação</th>
-                <th style="background-color: #FFCF78;">ipo de Ração</th>
-                <th style="background-color: #FFCF78;">Tipo de Pastagem</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% bufalos.forEach(bufalo => { %>
-                <% if (Array.isArray(bufalo.zootecnico) && bufalo.zootecnico.length > 0) { %>
-                    <% bufalo.zootecnico.forEach(zootecnico => { %>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="background-color: #FFCF78;">TAG</th>
+                    <th style="background-color: #FFCF78;">Comprimento Corporal</th>
+                    <th style="background-color: #FFCF78;">Circunferência Corporal</th>
+                    <th style="background-color: #FFCF78;">Altura da Cernelha</th>
+                    <th style="background-color: #FFCF78;">Suplementação</th>
+                    <th style="background-color: #FFCF78;">Tipo de Ração</th>
+                    <th style="background-color: #FFCF78;">Tipo de Pastagem</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% bufalos.forEach(bufalo => { %>
+                    <% if (Array.isArray(bufalo.zootecnico) && bufalo.zootecnico.length > 0) { %>
+                        <% bufalo.zootecnico.forEach(zootecnico => { %>
+                            <tr>
+                                <td><%= bufalo.tag %></td>
+                                <td><%= zootecnico.comprimentoCorporal %></td>
+                                <td><%= zootecnico.circunferenciaCorporal %></td>
+                                <td><%= zootecnico.alturaCernelha %></td>
+                                <td><%= zootecnico.suplementacao %></td>
+                                <td><%= zootecnico.tipoRacao %></td>
+                                <td><%= zootecnico.tipoPastagem %></td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
                         <tr>
                             <td><%= bufalo.tag %></td>
-                            <td><%= zootecnico.comprimentoCorporal %></td>
-                            <td><%= zootecnico.circunferenciaCorporal %></td>
-                            <td><%= zootecnico.alturaCernelha %></td>
-                            <td><%= zootecnico.suplementacao %></td>
-                            <td><%= zootecnico.tipoRacao %></td>
-                            <td><%= zootecnico.tipoPastagem %></td>
+                            <td colspan="6">Nenhum dado zootécnico disponível</td>
                         </tr>
-                    <% }) %>
-                <% } else { %>
-                    <tr>
-                        <td><%= bufalo.tag %></td>
-                        <td colspan="6">Nenhum dado zootécnico disponível</td>
-                    </tr>
-                <% } %>
-            <% }) %>
-        </tbody>
-        
-    </table>
-</div>
+                    <% } %>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
 
-<%- include('partials/footer.ejs') %>
+    <%- include('partials/footer.ejs') %>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const bufalosSuplementacao = <%= bufalosSuplementacao %>
-        const bufalosObservacao = <%= bufalosObservacao %>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const suplementacaoMineral = <%= suplementacaoMineral %>;
+            const suplementacaoProteico = <%= suplementacaoProteico %>;
+            const suplementacaoEnergetico = <%= suplementacaoEnergetico %>;
+            const suplementacaoVitaminico = <%= suplementacaoVitaminico %>;
 
-        // Criação do gráfico de pizza
-        const ctx = document.getElementById('graficoZootec').getContext('2d')
-        const graficoZootec = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Em Suplementação', 'Em Observação'],
-                datasets: [{
-                    label: 'Búfalos',
-                    data: [bufalosSuplementacao, bufalosObservacao],
-                    backgroundColor: [
-                        'rgba(242, 184, 77, 255)',
-                        'rgba(134, 78, 4, 255)',
-                    ],
-                    borderColor: [
-                        'rgba(242, 184, 77, 255)',
-                        'rgba(134, 78, 4, 255)',
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top'
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(0)
+            // Criação do gráfico Suplementos pizza
+            const ctxSuplementacao = document.getElementById('graficoSuplementacao').getContext('2d');
+            const graficoSuplementacao = new Chart(ctxSuplementacao, {
+                type: 'pie',
+                data: {
+                    labels: ['Suplemento Proteico', 'Suplemento Mineral', 'Suplemento Energético', 'Suplemento Vitamínico'],
+                    datasets: [{
+                        label: 'Búfalos',
+                        data: [suplementacaoMineral, suplementacaoProteico, suplementacaoEnergetico, suplementacaoVitaminico],
+                        backgroundColor: [
+                            'rgba(242, 184, 77, 0.8)',
+                            'rgba(134, 78, 4, 0.8)',
+                            'rgba(206,92,10,0.8)',
+                            'rgba(206,125,10,0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(242, 184, 77, 1)',
+                            'rgba(134, 78, 4, 1)',
+                            'rgba(206,92,10,1)',
+                            'rgba(206,125,10,1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(0);
+                                }
                             }
                         }
                     }
                 }
-            }
+            });
+
+            const capimElefante = <%= capimElefante %>;
+            const capimTanzania = <%= capimTanzania %>;
+            const capimMombaca = <%= capimMombaca %>;
+            const capimCoastCross = <%= capimCoastCross %>;
+
+            // Criação do gráfico Pasto pizza
+            const ctxPasto = document.getElementById('graficoPasto').getContext('2d');
+            const graficoPasto = new Chart(ctxPasto, {
+                type: 'pie',
+                data: {
+                    labels: ['Capim Elefante', 'Capim Tanzania', 'Capim Mombaça', 'Capim Coast Cross'],
+                    datasets: [{
+                        label: 'Búfalos',
+                        data: [capimElefante, capimTanzania, capimMombaca, capimCoastCross],
+                        backgroundColor: [
+                            'rgba(242, 184, 77, 0.8)',
+                            'rgba(134, 78, 4, 0.8)',
+                            'rgba(206,92,10,0.8)',
+                            'rgba(206,125,10,0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(242, 184, 77, 1)',
+                            'rgba(134, 78, 4, 1)',
+                            'rgba(206,92,10,1)',
+                            'rgba(206,125,10,1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(0);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         });
-    });
-</script>
+    </script>
+</div>
 
 <style>
-    #graficoZootec {
-        max-width: 200px; /* Altere para o tamanho desejado */
-        max-height: 200px; /* Altere para o tamanho desejado */
+    #graficoSuplementacao,
+    #graficoPasto {
+        max-width: 400px; /* Ajuste conforme necessário */
+        max-height: 400px; /* Ajuste conforme necessário */
     }
 </style>
