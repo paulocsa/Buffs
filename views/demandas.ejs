@@ -2,19 +2,22 @@
 <%- include('partials/nav.ejs') %>
 <%- include('partials/sidebar.ejs') %>
 
-<div class="container">
-    <h1>Atribuir Demandas</h1>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDemandaModal">
-        Adicionar Demandas
-    </button>
-
-    <table class="table">
+   <div style="background-color: #FEF5E4;display: flex; width: 100%;flex-direction: column;flex-direction: column; justify-content: flex-start; ">
+    <div style="background-color: #F5F5F5; width: 100%;height: 70px; margin-bottom: 10px;width: 100%;">
+        <p style="margin-top: 20px; margin-left: 20px;">Demandas</p>
+        <button type="button" class="btn btn-secondary"  data-toggle="modal" data-target="#addDemandaModal"
+            style="justify-content: right; display: flex;margin-left: auto; margin-right: 10px;margin-top: -40px;background-color: #2D220A;">
+            Adicionar Demandas
+        </button>
+    </div>
+    <div class="div-infos-func">
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Cargo</th>
-                <th>Tipo de Serviço</th>
-                <th>Ações</th>
+                <th style="background-color: #FFCF78;">Nome</th>
+                <th style="background-color: #FFCF78;">Cargo</th>
+                <th style="background-color: #FFCF78;">Tipo de Serviço</th>
+                <th style="background-color: #FFCF78;">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -47,6 +50,7 @@
             <% }); %>
         </tbody>
     </table>
+</div>
 </div>
 
 

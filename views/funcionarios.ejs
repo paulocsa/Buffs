@@ -4,7 +4,7 @@
             <div
                 style="background-color: #FEF5E4;display: flex; width: 100%;flex-direction: column;flex-direction: column; justify-content: flex-start; ">
                 <div style="background-color: #F5F5F5; width: 100%;height: 70px; margin-bottom: 10px;width: 100%;">
-                    <p style="margin-top: 20px; margin-left: 20px;">Página inicial</p>
+                    <p style="margin-top: 20px; margin-left: 20px;">Funcionarios</p>
                     <button type="button" class="btn btn-secondary" data-toggle="modal"
                         data-target="#addFuncionarioModal"
                         style="justify-content: right; display: flex;margin-left: auto; margin-right: 10px;margin-top: -40px;background-color: #2D220A;">
@@ -88,7 +88,7 @@
             <!-- Modal Adicionar Funcionário -->
             <div class="modal fade" id="addFuncionarioModal" tabindex="-1" role="dialog"
                 aria-labelledby="addFuncionarioModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+               <div class="modal-dialog" role="document" style="max-width: 45%; max-height: 50%;margin-top: 7%;">
                     <div class="modal-content">
                         <form action="/createFuncionario" method="POST">
                             <div class="modal-header">
@@ -159,7 +159,7 @@
             <% funcionarios.forEach(funcionario=> { %>
                 <div class="modal fade" id="editFuncionarioModal<%= funcionario.id %>" tabindex="-1" role="dialog"
                     aria-labelledby="editFuncionarioModalLabel<%= funcionario.id %>" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+                    <div class="modal-dialog" role="document" style="max-width: 50%; max-height: 70%;margin-top: 7%;">
                         <div class="modal-content">
                             <form action="/updateFuncionario/<%= funcionario.id %>" method="POST">
                                 <div class="modal-header">
@@ -240,7 +240,7 @@
 
                 <% funcionarios.forEach(funcionario => { %>
                     <div class="modal fade" id="viewFuncionarioModal<%= funcionario.id %>" tabindex="-1" role="dialog" aria-labelledby="viewFuncionarioModalLabel<%= funcionario.id %>" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                        <div class="modal-dialog" role="document" style="max-width: 50%; max-height: 70%;margin-top: 7%;">
                             <div class="modal-content">
                                 <form action="/viFuncionario/<%= funcionario.id %>" method="POST">
                                     <div class="modal-header">
@@ -254,29 +254,31 @@
                                         <div class="container">
                                             infos:
                                             <div class="row">
-                                                <div class="col">Nome:<br><%= funcionario.nome %></div>
-                                                <div class="col">CPF:<br><%= funcionario.cpf %></div>
+                                                <div class="col"><p>Nome:<br><%= funcionario.nome %></p></div>
+                                                <div class="col"><p>CPF:<br><%= funcionario.cpf %></p></div>
+                                                <div class="col"><p>Data Nascimento:<br><%= funcionario.dataNascimento %></p></div>
+                                                <div class="col"><p>Cargo:<br><%= funcionario.cargo %></p></div>
                                             </div>
                                             Contato:
                                             <div class="row">
-                                                <div class="col">E-mail:<br><%= funcionario.email %></div>
-                                                <div class="col">Telefone:<br><%= funcionario.telefone %></div>
-                                            </div><div class="row">
-                                                <div class="col">Cargo:<br><%= funcionario.cargo %></div>
-                                                <div class="col">Data Nascimento:<br><%= funcionario.dataNascimento %></div>
+                                                <div class="col"><p>E-mail:<br><%= funcionario.email %></p></div>
+                                                <div class="col"><p>Telefone:<br><%= funcionario.telefone %></p></div>
+                                                <div class="col"></div>
                                             </div>
+                                            Endereço:
                                             <div class="row">
-                                                <p class="card-text"><%= funcionario.rua %></p>
-                                                <p class="card-text"><%= funcionario.numero %></p>
-                                                <p class="card-text"><%= funcionario.bairro %></p>
-                                                <p class="card-text"><%= funcionario.cidade %></p>
-                                                <p class="card-text"><%= funcionario.estado %></p>
+                                                <div class="col"><p>Estado:<br><%= funcionario.estado %></p></div>
+                                                <div class="col"><p>Cidade:<br><%= funcionario.cidade %></p></div>
+                                                <div class="col"><p>Bairro:<br><%= funcionario.bairro %></p></div>
+                                            </div><div class="row">
+                                                <div class="col"><p>Rua:<br><%= funcionario.rua %></p></div>
+                                                <div class="col"><p>Nº:<br><%= funcionario.numero %></p></div>
+                                                <div class="col"></div>
                                             </div>
                                           </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
                                     </div>
                                 </form>
                             </div>
