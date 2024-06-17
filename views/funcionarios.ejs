@@ -88,7 +88,7 @@
             <!-- Modal Adicionar Funcionário -->
             <div class="modal fade" id="addFuncionarioModal" tabindex="-1" role="dialog"
                 aria-labelledby="addFuncionarioModalLabel" aria-hidden="true">
-               <div class="modal-dialog" role="document" style="max-width: 45%; max-height: 50%;margin-top: 7%;">
+                <div class="modal-dialog" role="document" style="max-width: 45%; max-height: 50%;margin-top: 7%;">
                     <div class="modal-content">
                         <form action="/createFuncionario" method="POST">
                             <div class="modal-header">
@@ -238,54 +238,104 @@
                 </div>
                 <% }); %>
 
-                <% funcionarios.forEach(funcionario => { %>
-                    <div class="modal fade" id="viewFuncionarioModal<%= funcionario.id %>" tabindex="-1" role="dialog" aria-labelledby="viewFuncionarioModalLabel<%= funcionario.id %>" aria-hidden="true">
-                        <div class="modal-dialog" role="document" style="max-width: 50%; max-height: 70%;margin-top: 7%;">
-                            <div class="modal-content">
-                                <form action="/viFuncionario/<%= funcionario.id %>" method="POST">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="viewFuncionarioModalLabel<%= funcionario.id %>">Visualizar Funcionário</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- Formulário de edição de funcionário -->
-                                        <div class="container">
-                                            infos:
-                                            <div class="row">
-                                                <div class="col"><p>Nome:<br><%= funcionario.nome %></p></div>
-                                                <div class="col"><p>CPF:<br><%= funcionario.cpf %></p></div>
-                                                <div class="col"><p>Data Nascimento:<br><%= funcionario.dataNascimento %></p></div>
-                                                <div class="col"><p>Cargo:<br><%= funcionario.cargo %></p></div>
+                    <% funcionarios.forEach(funcionario=> { %>
+                        <div class="modal fade" id="viewFuncionarioModal<%= funcionario.id %>" tabindex="-1"
+                            role="dialog" aria-labelledby="viewFuncionarioModalLabel<%= funcionario.id %>"
+                            aria-hidden="true">
+                            <div class="modal-dialog" role="document"
+                                style="max-width: 50%; max-height: 70%;margin-top: 7%;">
+                                <div class="modal-content">
+                                    <form action="/viFuncionario/<%= funcionario.id %>" method="POST">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="viewFuncionarioModalLabel<%= funcionario.id %>">
+                                                Visualizar Funcionário</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Formulário de edição de funcionário -->
+                                            <div class="container">
+                                                infos:
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <p>Nome:<br>
+                                                            <%= funcionario.nome %>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p>CPF:<br>
+                                                            <%= funcionario.cpf %>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p>Data Nascimento:<br>
+                                                            <%= funcionario.dataNascimento %>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p>Cargo:<br>
+                                                            <%= funcionario.cargo %>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                Contato:
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <p>E-mail:<br>
+                                                            <%= funcionario.email %>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p>Telefone:<br>
+                                                            <%= funcionario.telefone %>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col"></div>
+                                                </div>
+                                                Endereço:
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <p>Estado:<br>
+                                                            <%= funcionario.estado %>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p>Cidade:<br>
+                                                            <%= funcionario.cidade %>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p>Bairro:<br>
+                                                            <%= funcionario.bairro %>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <p>Rua:<br>
+                                                            <%= funcionario.rua %>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p>Nº:<br>
+                                                            <%= funcionario.numero %>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col"></div>
+                                                </div>
                                             </div>
-                                            Contato:
-                                            <div class="row">
-                                                <div class="col"><p>E-mail:<br><%= funcionario.email %></p></div>
-                                                <div class="col"><p>Telefone:<br><%= funcionario.telefone %></p></div>
-                                                <div class="col"></div>
-                                            </div>
-                                            Endereço:
-                                            <div class="row">
-                                                <div class="col"><p>Estado:<br><%= funcionario.estado %></p></div>
-                                                <div class="col"><p>Cidade:<br><%= funcionario.cidade %></p></div>
-                                                <div class="col"><p>Bairro:<br><%= funcionario.bairro %></p></div>
-                                            </div><div class="row">
-                                                <div class="col"><p>Rua:<br><%= funcionario.rua %></p></div>
-                                                <div class="col"><p>Nº:<br><%= funcionario.numero %></p></div>
-                                                <div class="col"></div>
-                                            </div>
-                                          </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-                                    </div>
-                                </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">OK</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                <% }); %>
-                
+                        <% }); %>
+
 
 
                             <%- include ('partials/footer.ejs') %>
