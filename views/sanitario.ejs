@@ -2,68 +2,66 @@
 <%- include('partials/nav.ejs') %>
 <%- include('partials/sidebar.ejs') %>
 
-<div class="container">
-    <h1>Controle Sanitário</h1>
-    <button type="button" class="btn btn-primary">
-        Exportar Dados
-    </button>
+<div style="background-color: #FEF5E4;display: flex; width: 100%;flex-direction: column;flex-direction: column; justify-content: flex-start; ">
+    <div style="background-color: #F5F5F5; width: 100%;height: 70px; margin-bottom: 10px;width: 100%;">
+        <p style="margin-top: 20px; margin-left: 20px;">Controle Sanitário</p>
+        <div style="justify-content: right; display: flex;margin-left: auto;margin-top: -40px;">
+                <button class="btn btn-dark" style="background-color: #2D220A;">Exportar dados</button>
+        </div>
+    </div>
     
     <!-- Visão Geral -->
-    <div class="overview">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Total de Búfalos</th>
-                    <th>Verminoses</th>
-                    <th>Hemoglibunuria</th>
-                    <th>Contra Febre Aftosa</th>
-                    <th>Contra Febre Brucelose</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><%= totalBufalos %></td>
-                    <td><%= contraVerminoses %></td>
-                    <td><%= hemoglobinuriaBacilar %></td>
-                    <td><%= contraFebreAftosa %></td>
-                    <td><%= contraBrucelose %></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="overview" style="text-align: center; margin: auto; width: 50%;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="background-color: #FFCF78;">Total de Búfalos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= totalBufalos %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 
     <!-- Gráfico de Barras -->
     <div class="chart-container">
-        <canvas id="graficoTratamentos" width="400" height="200"></canvas>
+        <canvas id="graficoSanitario"></canvas>
     </div>
     
+
     <!-- Tabela de Vacinas/Tratamentos em Pendência -->
-    <div class="pending-treatments">
-        <h2>Vacinas/Tratamentos em Pendência</h2>
-        <table class="table table-striped">
-            <thead>
+<div class="pending-treatments">
+    <h2>Vacinas/Tratamentos em Pendência</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="background-color: #FFCF78;">Nome Búfalo</th>
+                <th style="background-color: #FFCF78;">Tag</th>
+                <th style="background-color: #FFCF78;">Vacina / Tratamento</th>
+                <th style="background-color: #FFCF78;">Data de Vacinação</th>
+                <th style="background-color: #FFCF78;">Próxima Dose</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% sanitario.forEach(item => { %>
                 <tr>
-                    <th>Nome Búfalo</th>
-                    <th>Tag</th>
-                    <th>Vacina / Tratamento</th>
-                    <th>Data de Vacinação</th>
-                    <th>Próxima Dose</th>
+                    <td></td> <!--tem que relacionar o búfalo no banco cara me BATI MUITO mas ainda n sei fazer essa bosta -->
+                    <td></td>
+                    <td><%= item.nomeTratamento %></td>
+                    <td><%= item.dataAplicacao %></td>
+                    <td><%= item.dataRetorno %></td>
                 </tr>
-            </thead>
-            <tbody>
-                <% sanitario.forEach(nomeTratamento => { %>
-                    <tr>
-                        <td><%= nomeTratamento.contraVerminoses %></td>
-                        <td><%= nomeTratamento.hemoglobinuriaBacilar %></td>
-                        <td><%= nomeTratamento.contraBrucelose %></td>
-                        <td><%= nomeTratamento.contraFebreAftosa %></td>
-                        <td><%= nomeTratamento.estomatiteVesicular %></td>
-                    </tr>
-                <% }) %>
-            </tbody>
-        </table>
-    </div>
+            <% }) %>
+        </tbody>
+    </table>
 </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
     const contraVerminoses = <%= contraVerminoses %>;
@@ -72,14 +70,15 @@
     const contraFebreAftosa = <%= contraFebreAftosa %>;
     const estomatiteVesicular = <%= estomatiteVesicular %>;
 
-    // Criação do gráfico Pasto pizza
-    const ctxPasto = document.getElementById('graficoPasto').getContext('2d');
-    const graficoPasto = new Chart(ctxPasto, {
-        type: 'pie',
+
+    // Criação do gráfico Sanitário 
+    const ctxSanitario = document.getElementById('graficoSanitario').getContext('2d');
+    const graficoSanitario = new Chart(ctxSanitario, {
+        type: 'bar',
         data: {
             labels: ['Tratamento contra Verminoses', 'Tratamento da Hemoglobinúria Bacilar', 'Vacinação contra Brucelose', 'Vacinação contra Febre Aftosa', 'Medicação contra Estomatite Vesicular'],
             datasets: [{
-                label: 'Búfalos',
+                label: ['Tratamento contra Verminoses', 'Tratamento da Hemoglobinúria Bacilar', 'Vacinação contra Brucelose', 'Vacinação contra Febre Aftosa', 'Medicação contra Estomatite Vesicular'],
                 data: [contraVerminoses, hemoglobinuriaBacilar, contraBrucelose, contraFebreAftosa, estomatiteVesicular],
                 backgroundColor: [
                     'rgba(242, 184, 77, 0.8)',
@@ -100,7 +99,7 @@
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'top'
+                    position: ''
                 },
                 tooltip: {
                     callbacks: {
@@ -113,5 +112,12 @@
         }
     });
 </script>
+
+<style>
+    #graficoSanitario{
+        max-width: 80vw; /* Ajuste conforme necessário */
+        max-height: 40vh; /* Ajuste conforme necessário */
+    }
+</style>
 
 <%- include('partials/footer.ejs') %>

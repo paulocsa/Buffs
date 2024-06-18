@@ -1,7 +1,122 @@
 <%- include('partials/header.ejs') %>
-    <%- include('partials/nav.ejs') %>
-        <%- include('partials/sidebar.ejs') %>
+<%- include('partials/nav.ejs') %>
+<%- include('partials/sidebar.ejs') %>
+
+<div style="background-color: #FEF5E4;display: flex; width: 100%;flex-direction: column;flex-direction: column; justify-content: flex-start; ">
+    <div style="background-color: #F5F5F5; width: 100%;height: 70px; margin-bottom: 10px;width: 100%;">
+        <p style="margin-top: 20px; margin-left: 20px;">Controle Sanitário</p>
+        <div style="justify-content: right; display: flex;margin-left: auto;margin-top: -40px;">
+                <button class="btn btn-dark" style="background-color: #2D220A;">Exportar dados</button>
+        </div>
+    </div>
+    
+    <!-- Visão Geral -->
+<div class="container" style="text-align: center; margin: auto; width: 50%;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="background-color: #FFCF78;">Total de Búfalos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= totalBufalos %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 
+    <!-- Gráfico de Barras -->
+    <div class="chart-container">
+        <canvas id="graficoReproducao"></canvas>
+    </div>
+    
 
-<%- include ('partials/footer.ejs') %>
+    <!-- Tabela de Vacinas/Tratamentos em Pendência -->
+<div class="pending-treatments">
+    <h2>Vacinas/Tratamentos em Pendência</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="background-color: #FFCF78;">Nome Búfalo</th>
+                <th style="background-color: #FFCF78;">Tag</th>
+                <th style="background-color: #FFCF78;">Raça</th>
+                <th style="background-color: #FFCF78;">Tipo de Inseminação</th>
+                <th style="background-color: #FFCF78;">Última Inseminação</th>
+                <th style="background-color: #FFCF78;">Data de Parto</th>
+                <th style="background-color: #FFCF78;">Observação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% reproducao.forEach(reproducao => { %>
+                <tr>
+                    <td><%= reproducao.nomeBufalo %></td> <!--tem que relacionar o búfalo no banco cara me BATI MUITO mas ainda n sei fazer essa bosta -->
+                    <td><%= reproducao.tag %></td>
+                    <td><%= reproducao.raca %></td>
+                    <td><%= reproducao.tipoInseminacao %></td>
+                    <td><%= reproducao.dataParto %></td>
+                    <td><%= reproducao.observacaoParto %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const totalBufalos = <%= totalBufalos %>;
+    const bufalasGestantes = <%= bufalasGestantes %>;
+    const bufalasAptasInseminacao = <%= bufalasAptasInseminacao %>;
+
+
+    // Criação do gráfico Reprodução 
+    const ctxReproducao = document.getElementById('graficoReproducao').getContext('2d');
+    const graficoReproducao= new Chart(ctxReproducao, {
+        type: 'bar',
+        data: {
+            labels: ['Total de Búfalas', 'Búfalas Gestantes', 'Aptas para Inseminação'],
+            datasets: [{
+                label: ['Total de Búfalas', 'Búfalas Gestantes', 'Aptas para Inseminação'],
+                data: [totalBufalos, bufalasGestantes, bufalasAptasInseminacao],
+                backgroundColor: [
+                    'rgba(242, 184, 77, 0.8)',
+                    'rgba(134, 78, 4, 0.8)',
+                    'rgba(206,92,10,0.8)',
+                ],
+                borderColor: [
+                    'rgba(242, 184, 77, 1)',
+                    'rgba(134, 78, 4, 1)',
+                    'rgba(206,92,10,1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: ''
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(0);
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+<style>
+    #graficoReproducao{
+        max-width: 80vw; /* Ajuste conforme necessário */
+        max-height: 40vh; /* Ajuste conforme necessário */
+    }
+</style>
+
+
+<%- include('partials/footer.ejs') %>

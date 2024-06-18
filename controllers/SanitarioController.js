@@ -14,6 +14,12 @@ router.get('/sanitario', async (req, res) => {
         // Contagem de búfalos em cada categoria
         const totalBufalos = bufalos.length;
 
+        const tag = await Bufalo.count({
+            where: {
+                tag: "TAG",
+            }
+        })
+
         const contraVerminoses = await Sanitario.count({
             where: {
                 nomeTratamento: "Tratamento contra Verminoses",
@@ -41,13 +47,14 @@ router.get('/sanitario', async (req, res) => {
         })    
 
         bufalos.forEach(bufalo => {
-            bufalo.sanitario = sanitario.filter(z => z.tag === bufalo.tag);
+            bufalo.sanitario = sanitario.filter(s => s.tag === bufalo.tag);
         });
 
         // Renderizar o template 'sanitario' passando todos os dados necessários
         res.render('sanitario', {
             sanitario,
             bufalos,
+            tag,
             ultimoBufaloId,
             totalBufalos,
             contraVerminoses,

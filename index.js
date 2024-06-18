@@ -17,6 +17,7 @@ import Funcionario from './models/Funcionario.js'
 import Bufalo from './models/Bufalo.js'
 import Demanda from './models/Demanda.js'
 import Zootecnico from './models/Zootecnico.js'
+import Reproducao from './models/Reproducao.js'
 
 const app = express()
 app.set('view engine', 'ejs')
