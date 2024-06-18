@@ -5,7 +5,7 @@ import Reproducao from '../models/Reproducao.js'
 import { where } from 'sequelize'
 
 router.get('/reproducao', async (req, res) => {
-    try {
+    try { 
         const bufalos = await Bufalo.findAll() // Buscar todos os búfalos cadastrados
         const reproducao = await Reproducao.findAll() //buscar os dados reprodutivos
         const ultimoBufalo = await Bufalo.findOne({ order: [['id', 'DESC']] }) // Buscar último búfalo cadastrado
@@ -14,21 +14,6 @@ router.get('/reproducao', async (req, res) => {
 
         // Contagem de búfalos em cada categoria
         const totalBufalos = bufalos.length;
-        const tag = await Bufalo.count({
-            where: {
-                tag: "TAG"
-            }
-        })
-        const nomeBufalo = await Bufalo.count({
-            where: {
-                tag: "Nome do Búfalo"
-            }
-        })
-        const raca = await Bufalo.count({
-            where: {
-                raca: "Raça"
-            }
-        })
         const taxaConcepcao = await Reproducao.count({
             where: {
                 taxaConcepcao: "Taxa de Concepção",
@@ -79,15 +64,16 @@ router.get('/reproducao', async (req, res) => {
                 bufalasAptasInseminacao: "Búfalas Aptas para Inseminação"
             }
         })
- 
+        
+        bufalos.forEach(bufalo => {
+            bufalo.reproducao = reproducao.filter(z => z.tag === bufalo.tag);
+        });
+
 
        // Renderizar o template 'zootecnico' passando todos os dados necessários
         res.render('reproducao', {
             reproducao,
-            tag,
             bufalos,
-            nomeBufalo,
-            raca,
             ultimoBufaloId,
             totalBufalos,
             taxaConcepcao,

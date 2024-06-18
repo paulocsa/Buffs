@@ -2,6 +2,10 @@ import Sequelize from 'sequelize'
 import connection from '../config/sequelize-config.js'
 
 const Sanitario = connection.define('sanitario', {
+    tag: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
     tipoSanitario: {
         type: Sequelize.STRING,
         allowNull: false

@@ -11,7 +11,7 @@
     </div>
     
     <!-- Visão Geral -->
-<div class="container" style="text-align: center; margin: auto; width: 50%;">
+    <div class="div-infos-func" style="text-align: center; width: 50%;">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -28,7 +28,7 @@
 
 
     <!-- Gráfico de Barras -->
-    <div class="chart-container">
+    <div class="div-infos-func">
         <canvas id="graficoReproducao"></canvas>
     </div>
     
@@ -42,6 +42,7 @@
                 <th style="background-color: #FFCF78;">Nome Búfalo</th>
                 <th style="background-color: #FFCF78;">Tag</th>
                 <th style="background-color: #FFCF78;">Raça</th>
+                <th style="background-color: #FFCF78;">Taxa de Concepção</th>
                 <th style="background-color: #FFCF78;">Tipo de Inseminação</th>
                 <th style="background-color: #FFCF78;">Última Inseminação</th>
                 <th style="background-color: #FFCF78;">Data de Parto</th>
@@ -49,16 +50,22 @@
             </tr>
         </thead>
         <tbody>
-            <% reproducao.forEach(reproducao => { %>
+            <% bufalos.forEach(bufalo => { %>
+                <% if (Array.isArray(bufalo.reproducao) && bufalo.reproducao.length > 0) { %>
+                    <% bufalo.reproducao.forEach(reproducao => { %>
                 <tr>
-                    <td><%= reproducao.nomeBufalo %></td> <!--tem que relacionar o búfalo no banco cara me BATI MUITO mas ainda n sei fazer essa bosta -->
+                    <td><%= bufalo.nome %></td> <!--tem que relacionar o búfalo no banco cara me BATI MUITO mas ainda n sei fazer essa bosta -->
                     <td><%= reproducao.tag %></td>
-                    <td><%= reproducao.raca %></td>
+                    <td><%= bufalo.raca %></td>
+                    <td><%= reproducao.taxaConcepcao %></td>
                     <td><%= reproducao.tipoInseminacao %></td>
-                    <td><%= reproducao.dataParto %></td>
+                    <td><%= new Date(reproducao.ultimaInseminacao).toLocaleDateString() %> %></td>
+                    <td><%= new Date(reproducao.dataParto).toLocaleDateString() %></td>
                     <td><%= reproducao.observacaoParto %></td>
                 </tr>
-            <% }) %>
+                <% }); %>
+                <% } %>
+            <% }); %>
         </tbody>
     </table>
 </div>
