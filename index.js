@@ -50,10 +50,12 @@ app.use(flash())
 app.use('/', UsersController)
 app.use('/', BufalosController)
 app.use('/', ZootecnicoController)
+app.use('/', SanitarioController)
 app.use('/', FuncionariosController)
 app.use('/', DemandasController)
 app.use('/', ReproducaoController)
 app.use('/', SanitarioController)
+
 
 
 // Rota Inicial com Autenticação
