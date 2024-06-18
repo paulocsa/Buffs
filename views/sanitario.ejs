@@ -1,7 +1,117 @@
 <%- include('partials/header.ejs') %>
-    <%- include('partials/nav.ejs') %>
-        <%- include('partials/sidebar.ejs') %>
+<%- include('partials/nav.ejs') %>
+<%- include('partials/sidebar.ejs') %>
 
+<div class="container">
+    <h1>Controle Sanitário</h1>
+    <button type="button" class="btn btn-primary">
+        Exportar Dados
+    </button>
+    
+    <!-- Visão Geral -->
+    <div class="overview">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Total de Búfalos</th>
+                    <th>Verminoses</th>
+                    <th>Hemoglibunuria</th>
+                    <th>Contra Febre Aftosa</th>
+                    <th>Contra Febre Brucelose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><%= totalBufalos %></td>
+                    <td><%= contraVerminoses %></td>
+                    <td><%= hemoglobinuriaBacilar %></td>
+                    <td><%= contraFebreAftosa %></td>
+                    <td><%= contraBrucelose %></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
+    <!-- Gráfico de Barras -->
+    <div class="chart-container">
+        <canvas id="graficoTratamentos" width="400" height="200"></canvas>
+    </div>
+    
+    <!-- Tabela de Vacinas/Tratamentos em Pendência -->
+    <div class="pending-treatments">
+        <h2>Vacinas/Tratamentos em Pendência</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nome Búfalo</th>
+                    <th>Tag</th>
+                    <th>Vacina / Tratamento</th>
+                    <th>Data de Vacinação</th>
+                    <th>Próxima Dose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% sanitario.forEach(nomeTratamento => { %>
+                    <tr>
+                        <td><%= nomeTratamento.contraVerminoses %></td>
+                        <td><%= nomeTratamento.hemoglobinuriaBacilar %></td>
+                        <td><%= nomeTratamento.contraBrucelose %></td>
+                        <td><%= nomeTratamento.contraFebreAftosa %></td>
+                        <td><%= nomeTratamento.estomatiteVesicular %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-<%- include ('partials/footer.ejs') %>
+<script>
+    const contraVerminoses = <%= contraVerminoses %>;
+    const hemoglobinuriaBacilar = <%= hemoglobinuriaBacilar %>;
+    const contraBrucelose = <%= contraBrucelose %>;
+    const contraFebreAftosa = <%= contraFebreAftosa %>;
+    const estomatiteVesicular = <%= estomatiteVesicular %>;
+
+    // Criação do gráfico Pasto pizza
+    const ctxPasto = document.getElementById('graficoPasto').getContext('2d');
+    const graficoPasto = new Chart(ctxPasto, {
+        type: 'pie',
+        data: {
+            labels: ['Tratamento contra Verminoses', 'Tratamento da Hemoglobinúria Bacilar', 'Vacinação contra Brucelose', 'Vacinação contra Febre Aftosa', 'Medicação contra Estomatite Vesicular'],
+            datasets: [{
+                label: 'Búfalos',
+                data: [contraVerminoses, hemoglobinuriaBacilar, contraBrucelose, contraFebreAftosa, estomatiteVesicular],
+                backgroundColor: [
+                    'rgba(242, 184, 77, 0.8)',
+                    'rgba(134, 78, 4, 0.8)',
+                    'rgba(206,92,10,0.8)',
+                    'rgba(206,125,10,0.8)'
+                ],
+                borderColor: [
+                    'rgba(242, 184, 77, 1)',
+                    'rgba(134, 78, 4, 1)',
+                    'rgba(206,92,10,1)',
+                    'rgba(206,125,10,1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(0);
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+<%- include('partials/footer.ejs') %>
