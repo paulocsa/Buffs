@@ -6,16 +6,27 @@ import { where } from 'sequelize'
 import Auth from "../middleware/Auth.js"
 
 // Rota para listar todos os búfalos
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 router.get('/rebanhos', Auth, (req, res) => {
     Bufalo.findAll()
         .then(bufalos => {
+            // Embaralhe os dados dos búfalos
+            const shuffledBufalos = shuffle(bufalos);
+
             Zootecnico.findOne({ where: { /* Condições de busca, se necessário */ } })
                 .then(zootecnico => {
-                    res.render('rebanhos', { bufalos, zootecnico });
+                    res.render('rebanhos', { bufalos: shuffledBufalos, zootecnico });
                 })
                 .catch(err => {
                     req.flash('danger', 'Erro ao buscar dados do zootécnico.');
-                    res.render('rebanhos', { bufalos, zootecnico: null }); // Renderiza com zootecnico como null ou outro valor padrão
+                    res.render('rebanhos', { bufalos: shuffledBufalos, zootecnico: null });
                 });
         })
         .catch(err => {
